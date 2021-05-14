@@ -7,10 +7,16 @@ namespace Freyja.Core
 {
     public static class Dll
     {
-        [DllImport("Freyja", CallingConvention = CallingConvention.StdCall)]
+        [DllImport("freyja", CallingConvention = CallingConvention.StdCall)]
         public static extern int add(int a, int b);
-
-        [DllImport("Freyja", CallingConvention = CallingConvention.StdCall)]
+        
+        [DllImport("freyja", CallingConvention = CallingConvention.StdCall)]
         public static extern int sub(int a, int b);
+        
+        [DllImport("freyja", CallingConvention = CallingConvention.StdCall)]
+        public static extern int mul(int a, int b);
+        
+        [DllImport("freyja", CallingConvention = CallingConvention.StdCall)]
+        public static extern int initialize_enclave();
     }
 }

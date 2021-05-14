@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{EABCF268-EDF7-4EF5-BC72-E117EC8C01F5}</ProjectGuid>
+    <ProjectGuid>{D7F7A66A-4330-48FD-8C19-134DE6BF50EF}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Freyja</RootNamespace>
+    <RootNamespace>freyja</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -148,6 +148,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Enclave_u.h" />
+    <ClInclude Include="error_print.h" />
+    <ClInclude Include="Header.h" />
+    <ClInclude Include="sgx_attributes.h" />
+    <ClInclude Include="sgx_defs.h" />
+    <ClInclude Include="sgx_edger8r.h" />
+    <ClInclude Include="sgx_eid.h" />
+    <ClInclude Include="sgx_error.h" />
+    <ClInclude Include="sgx_key.h" />
+    <ClInclude Include="sgx_report.h" />
+    <ClInclude Include="sgx_urts.h" />
+    <ClInclude Include="user_types.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

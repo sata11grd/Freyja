@@ -1,6 +1,8 @@
 ﻿  Source.cpp
-     ライブラリ C:\Users\sfuna\source\repos\Freyja\Release\Freyja.lib とオブジェクト C:\Users\sfuna\source\repos\Freyja\Release\Freyja.exp を作成中
+     ライブラリ C:\Users\sfuna\Documents\repos\Freyja\freyja\Release\freyja.lib とオブジェクト C:\Users\sfuna\Documents\repos\Freyja\freyja\Release\freyja.exp を作成中
   コード生成しています。
-  All 2 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  58 of 59 functions (98.3%) were compiled, the rest were copied from previous compilation.
+    56 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
-  Freyja.vcxproj -> C:\Users\sfuna\source\repos\Freyja\Release\Freyja.dll
+  freyja.vcxproj -> C:\Users\sfuna\Documents\repos\Freyja\freyja\Release\freyja.dll

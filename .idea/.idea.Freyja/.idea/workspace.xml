@@ -16,9 +16,9 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Freyja/Demo/Demo1/Scripts/DemoSceneManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Core/Dll.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Demo/Demo1/Scripts/Editor/DemoSceneManagerEditor.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Core/Dll.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Demo/Demo1/Scripts/DemoSceneManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1sWsmcvUqUO9dipaipiBRLjzxUV" />
@@ -65,7 +65,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1620999842135</updated>
-      <workItem from="1620999849403" duration="3983000" />
+      <workItem from="1620999849403" duration="7077000" />
     </task>
     <servers />
   </component>
