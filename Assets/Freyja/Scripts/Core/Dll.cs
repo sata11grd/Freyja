@@ -7,7 +7,10 @@ namespace Freyja.Core
 {
     public static class Dll
     {
-        [DllImport("add", CallingConvention = CallingConvention.StdCall)]
-        public static extern int add_function(int a, int b);
+        [DllImport("Freyja", CallingConvention = CallingConvention.StdCall)]
+        public static extern int add(int a, int b);
+
+        [DllImport("Freyja", CallingConvention = CallingConvention.StdCall)]
+        public static extern int sub(int a, int b);
     }
 }
