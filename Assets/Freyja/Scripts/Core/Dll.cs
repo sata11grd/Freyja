@@ -15,5 +15,8 @@ namespace Freyja.Core
         
         [DllImport("freyja", CallingConvention = CallingConvention.StdCall)]
         public static extern int mul(int a, int b);
+        
+        [DllImport("freyja", CallingConvention = CallingConvention.StdCall)]
+        public static extern int initialize_enclave();
     }
 }

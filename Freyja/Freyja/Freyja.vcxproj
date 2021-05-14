@@ -150,7 +150,18 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Enclave_u.h" />
+    <ClInclude Include="error_print.h" />
     <ClInclude Include="Header.h" />
+    <ClInclude Include="sgx_attributes.h" />
+    <ClInclude Include="sgx_defs.h" />
+    <ClInclude Include="sgx_edger8r.h" />
+    <ClInclude Include="sgx_eid.h" />
+    <ClInclude Include="sgx_error.h" />
+    <ClInclude Include="sgx_key.h" />
+    <ClInclude Include="sgx_report.h" />
+    <ClInclude Include="sgx_urts.h" />
+    <ClInclude Include="user_types.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
