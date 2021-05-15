@@ -1,3 +1,13 @@
-﻿  App.cpp
-     
-  App.vcxproj -> C:\Users\sfuna\Documents\repos\Freyja\freyja\Debug\App.dll
+﻿  Creating untrusted proxy/bridge routines
+  App.cpp
+c:\users\sfuna\documents\repos\freyja\freyja\app\app.cpp(340): error C2220: 警告をエラーとして扱いました。'object' ファイルは生成されません。
+c:\users\sfuna\documents\repos\freyja\freyja\app\app.cpp(340): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\string.h(133): note: 'strcpy' の宣言を確認してください
+  Arrays.cpp
+  Functions.cpp
+  Pointers.cpp
+  Types.cpp
+  Libc.cpp
+  Libcxx.cpp
+  Thread.cpp
+  コードを生成中...

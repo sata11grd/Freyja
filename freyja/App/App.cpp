@@ -22,7 +22,6 @@
  *   suppliers or licensors in any way.
  *
  */
-
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
@@ -38,6 +37,10 @@
 #include "sgx_urts.h"
 #include "App.h"
 #include "Enclave_u.h"
+#include <string>
+#include <iostream>
+
+std::string unityMsg = "";
 
 /* Global EID shared by multiple threads */
 sgx_enclave_id_t global_eid = 0;
@@ -140,15 +143,26 @@ void print_error_message(sgx_status_t ret)
 
     for (idx = 0; idx < ttl; idx++) {
         if(ret == sgx_errlist[idx].err) {
-            if(NULL != sgx_errlist[idx].sug)
-                printf("Info: %s\n", sgx_errlist[idx].sug);
+			if (NULL != sgx_errlist[idx].sug) {
+				printf("Info: %s\n", sgx_errlist[idx].sug);
+				unityMsg += "Info: ";
+				unityMsg += sgx_errlist[idx].sug;
+				unityMsg += "\n";
+			}
             printf("Error: %s\n", sgx_errlist[idx].msg);
+			unityMsg += "Error: ";
+			unityMsg += sgx_errlist[idx].msg;
+			unityMsg += "\n";
             break;
         }
     }
     
-    if (idx == ttl)
-    	printf("Error code is 0x%X. Please refer to the \"Intel SGX SDK Developer Reference\" for more details.\n", ret);
+	if (idx == ttl) {
+		printf("Error code is 0x%X. Please refer to the \"Intel SGX SDK Developer Reference\" for more details.\n", ret);
+		unityMsg += "Error code is ";
+		unityMsg += "?";
+		unityMsg += ". Please refer to the \"Intel SGX SDK Developer Reference\" for more details.\n";
+	}
 }
 
 /* Initialize the enclave:
@@ -158,11 +172,12 @@ void print_error_message(sgx_status_t ret)
  */
 int initialize_enclave(void)
 {
+	int cnt = 100;
     char token_path[MAX_PATH] = {'\0'};
     sgx_launch_token_t token = {0};
     sgx_status_t ret = SGX_ERROR_UNEXPECTED;
     int updated = 0;
-    
+	cnt++;
     /* Step 1: try to retrieve the launch token saved by last transaction 
      *         if there is no token, then create a new one.
      */
@@ -173,7 +188,7 @@ int initialize_enclave(void)
     } else {
         strncat_s(token_path, _countof(token_path), "\\" TOKEN_FILENAME, sizeof(TOKEN_FILENAME)+2);
     }
-
+	cnt++;
     /* open the token file */
     HANDLE token_handler = CreateFileA(token_path, GENERIC_READ|GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_ALWAYS, NULL, NULL);
     if (token_handler == INVALID_HANDLE_VALUE) {
@@ -188,6 +203,7 @@ int initialize_enclave(void)
             printf("Warning: Invalid launch token read from \"%s\".\n", token_path);
         }
     }
+	cnt++;
 #else /* __GNUC__ */
     /* try to get the token saved in $HOME */
     const char *home_dir = getpwuid(getuid())->pw_dir;
@@ -222,6 +238,7 @@ int initialize_enclave(void)
     /* Debug Support: set 2nd parameter to 1 */
     ret = sgx_create_enclave(ENCLAVE_FILENAME, SGX_DEBUG_FLAG, &token, &updated, &global_eid, NULL);
     if (ret != SGX_SUCCESS) {
+		// NOTE: おそらくここで「Error: Can't open enclave file」となっている。ENCLAVE_FILENAMEにあるファイルをリソースに加えればいいのでは。
         print_error_message(ret);
 #ifdef _MSC_VER
         if (token_handler != INVALID_HANDLE_VALUE)
@@ -229,7 +246,7 @@ int initialize_enclave(void)
 #else
         if (fp != NULL) fclose(fp);
 #endif
-        return -1;
+        return cnt;
     }
 
     /* Step 3: save the launch token if it is updated */
@@ -267,7 +284,7 @@ int initialize_enclave(void)
         printf("Warning: Failed to save launch token to \"%s\".\n", token_path);
     fclose(fp);
 #endif
-    return 0;
+    return cnt;
 }
 
 /* OCall functions */
@@ -319,4 +336,22 @@ extern "C" __declspec(dllexport) int __stdcall add(int a, int b) {
 
 extern "C" __declspec(dllexport) int __stdcall test() {
 	return initialize_enclave();
+}
+
+extern "C" __declspec(dllexport) char*  __stdcall getLog() {
+	char* szSampleString = new char[5096];
+	std::char_traits<char>::copy(szSampleString, unityMsg.c_str(), unityMsg.size() + 1);
+
+	ULONG ulSize = strlen(szSampleString) + sizeof(char);
+	char* pszReturn = NULL;
+
+	pszReturn = (char*)::CoTaskMemAlloc(ulSize);
+	// Copy the contents of szSampleString
+	// to the memory pointed to by pszReturn.
+	strcpy_s(pszReturn, ulSize, szSampleString);
+
+	delete[] szSampleString;
+
+	// Return pszReturn.
+	return pszReturn;
 }

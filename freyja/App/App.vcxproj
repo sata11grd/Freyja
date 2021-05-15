@@ -184,7 +184,7 @@
       <AdditionalIncludeDirectories>$(SGXSDKInstallPath)\include;$(SolutionDir)\Include;$(SGXSDKInstallPath)\include\epid;$(SolutionDir)\App;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);</PreprocessorDefinitions>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -216,7 +216,7 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(SGXSDKInstallPath)\include;$(SolutionDir)\Include;$(SGXSDKInstallPath)\include\epid;$(SolutionDir)\App;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);</PreprocessorDefinitions>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ControlFlowGuard>Guard</ControlFlowGuard>
     </ClCompile>

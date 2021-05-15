@@ -1,3 +1,4 @@
 ﻿  App.cpp
+c:\users\sfuna\documents\repos\freyja\freyja\app\app.cpp(344): warning C4267: '初期化中': 'size_t' から 'ULONG' に変換しました。データが失われているかもしれません。
      
   App.vcxproj -> C:\Users\sfuna\Documents\repos\Freyja\freyja\x64\Debug\App.dll

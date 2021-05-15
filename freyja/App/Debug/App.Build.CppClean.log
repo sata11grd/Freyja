@@ -1,17 +1,5 @@
-c:\program files (x86)\intel\intelsgxsdk\src\sampleenclave\debug\app.lib
-c:\program files (x86)\intel\intelsgxsdk\src\sampleenclave\debug\app.exp
 c:\users\sfuna\documents\repos\freyja\freyja\debug\app.lib
 c:\users\sfuna\documents\repos\freyja\freyja\debug\app.exp
-c:\program files (x86)\intel\intelsgxsdk\src\sampleenclave\app\debug\vc141.pdb
-c:\program files (x86)\intel\intelsgxsdk\src\sampleenclave\app\debug\thread.obj
-c:\program files (x86)\intel\intelsgxsdk\src\sampleenclave\app\debug\libcxx.obj
-c:\program files (x86)\intel\intelsgxsdk\src\sampleenclave\app\debug\libc.obj
-c:\program files (x86)\intel\intelsgxsdk\src\sampleenclave\app\debug\types.obj
-c:\program files (x86)\intel\intelsgxsdk\src\sampleenclave\app\debug\pointers.obj
-c:\program files (x86)\intel\intelsgxsdk\src\sampleenclave\app\debug\functions.obj
-c:\program files (x86)\intel\intelsgxsdk\src\sampleenclave\app\debug\arrays.obj
-c:\program files (x86)\intel\intelsgxsdk\src\sampleenclave\app\debug\app.obj
-c:\program files (x86)\intel\intelsgxsdk\src\sampleenclave\app\debug\enclave_u.obj
 c:\users\sfuna\documents\repos\freyja\freyja\app\debug\vc141.pdb
 c:\users\sfuna\documents\repos\freyja\freyja\app\debug\thread.obj
 c:\users\sfuna\documents\repos\freyja\freyja\app\debug\libcxx.obj
@@ -22,17 +10,11 @@ c:\users\sfuna\documents\repos\freyja\freyja\app\debug\functions.obj
 c:\users\sfuna\documents\repos\freyja\freyja\app\debug\arrays.obj
 c:\users\sfuna\documents\repos\freyja\freyja\app\debug\app.obj
 c:\users\sfuna\documents\repos\freyja\freyja\app\debug\enclave_u.obj
-c:\program files (x86)\intel\intelsgxsdk\src\sampleenclave\app\enclave_u.h
-c:\program files (x86)\intel\intelsgxsdk\src\sampleenclave\app\enclave_u.c
 c:\users\sfuna\documents\repos\freyja\freyja\app\enclave_u.h
 c:\users\sfuna\documents\repos\freyja\freyja\app\enclave_u.c
-c:\program files (x86)\intel\intelsgxsdk\src\sampleenclave\debug\app.ilk
-c:\program files (x86)\intel\intelsgxsdk\src\sampleenclave\debug\app.dll
-c:\program files (x86)\intel\intelsgxsdk\src\sampleenclave\debug\app.pdb
-c:\users\sfuna\documents\repos\freyja\freyja\debug\app.dll
 c:\users\sfuna\documents\repos\freyja\freyja\debug\app.ilk
+c:\users\sfuna\documents\repos\freyja\freyja\debug\app.dll
 c:\users\sfuna\documents\repos\freyja\freyja\debug\app.pdb
-c:\users\sfuna\documents\repos\freyja\freyja\app\debug\app.vcxprojassemblyreference.cache
 c:\users\sfuna\documents\repos\freyja\freyja\app\debug\app.tlog\app.write.1u.tlog
 c:\users\sfuna\documents\repos\freyja\freyja\app\debug\app.tlog\cl.command.1.tlog
 c:\users\sfuna\documents\repos\freyja\freyja\app\debug\app.tlog\cl.read.1.tlog
