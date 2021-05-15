@@ -9,5 +9,8 @@ namespace Freyja.Core
     {
         [DllImport("App", CallingConvention = CallingConvention.StdCall)]
         public static extern int add(int a, int b);
+
+        [DllImport("App", CallingConvention = CallingConvention.StdCall)]
+        public static extern int test();
     }
 }

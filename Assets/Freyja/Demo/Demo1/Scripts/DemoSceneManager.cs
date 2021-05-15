@@ -11,6 +11,7 @@ namespace Freyja.Demo.Demo1
         public void Test()
         {
             Debug.Log(Dll.add(-5, 3));
+            Debug.Log(Dll.test());
         }
     }
 }

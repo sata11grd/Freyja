@@ -316,3 +316,7 @@ int SGX_CDECL main(int argc, char *argv[])
 extern "C" __declspec(dllexport) int __stdcall add(int a, int b) {
 	return a + b;
 }
+
+extern "C" __declspec(dllexport) int __stdcall test() {
+	return initialize_enclave();
+}
