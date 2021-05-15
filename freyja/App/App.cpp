@@ -312,3 +312,7 @@ int SGX_CDECL main(int argc, char *argv[])
     getchar();
     return 0;
 }
+
+extern "C" __declspec(dllexport) int __stdcall add(int a, int b) {
+	return a + b;
+}

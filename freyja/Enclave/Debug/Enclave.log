@@ -1,5 +1,4 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(402,5): warning MSB8038: Spectre 軽減策が有効になっていますが、Spectre 軽減策を適用済みのライブラリが見つかりません。Visual Studio ワークロードに Spectre 軽減策を適用済みのライブラリが含まれていることを確認してください。詳細については、https://aka.ms/Ofhn4c をご覧ください。
-  Creating proxy/bridge routines
   Arrays.cpp
   Functions.cpp
   Pointers.cpp
@@ -10,15 +9,14 @@
   Thread.cpp
   コードを生成中...
   Enclave_t.c
-     ライブラリ C:\Program Files (x86)\Intel\IntelSGXSDK\src\SampleEnclave\Debug\Enclave.lib とオブジェクト C:\Program Files (x86)\Intel\IntelSGXSDK\src\SampleEnclave\Debug\Enclave.exp を作成中
-  Enclave.vcxproj -> C:\Program Files (x86)\Intel\IntelSGXSDK\src\SampleEnclave\Debug\Enclave.dll
+  Enclave.vcxproj -> C:\Users\sfuna\Documents\repos\Freyja\freyja\Debug\Enclave.dll
   sign the enclave
   The required memory is 0x406000.
-  Succeed.
   <EnclaveConfiguration>
       <ProdID>0</ProdID>
       <ISVSVN>0</ISVSVN>
       <StackMaxSize>0x40000</StackMaxSize>
+  Succeed.
       <HeapMaxSize>0x100000</HeapMaxSize>
       <TCSNum>10</TCSNum>
       <TCSPolicy>1</TCSPolicy>
