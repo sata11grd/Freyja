@@ -9,6 +9,14 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Mm]emoryCaptures/
+Develop/SampleProject/[Ll]ibrary/
+Develop/SampleProject/[Ll]ibrary/
+Develop/SampleProject/[Tt]emp/
+Develop/SampleProject/[Oo]bj/
+Develop/SampleProject/[Bb]uild/
+Develop/SampleProject/[Bb]uilds/
+Develop/SampleProject/[Ll]ogs/
+Develop/SampleProject/[Mm]emoryCaptures/
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
@@ -30,7 +38,7 @@ ExportedObj/
 .consulo/
 *.csproj
 *.unityproj
-*.sln
+# *.sln
 *.suo
 *.tmp
 *.user

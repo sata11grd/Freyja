@@ -338,6 +338,50 @@ extern "C" __declspec(dllexport) int __stdcall test() {
 	return initialize_enclave();
 }
 
+extern "C" __declspec(dllexport) int __stdcall test2() {
+	// Initialize the enclave
+	if (initialize_enclave() < 0) {
+		printf("Enter a character before exit ...\n");
+		getchar();
+		return -1;
+	}
+
+	try {
+		// Utilize edger8r attributes
+		edger8r_array_attributes();
+		edger8r_pointer_attributes();
+		edger8r_type_attributes();
+		edger8r_function_attributes();
+	}
+	catch (char *str) {
+		return 10;
+	}
+
+	try {
+		// Utilize trusted libraries
+		ecall_libc_functions();
+		ecall_libcxx_functions();
+		ecall_thread_functions();
+	}
+	catch (char *str) {
+		return 11;
+	}
+
+	try {
+		// Destroy the enclave
+		sgx_destroy_enclave(global_eid);
+	}
+	catch (char *str) {
+		return 12;
+	}
+
+	printf("Info: SampleEnclave successfully returned.\n");
+
+	printf("Enter a character before exit ...\n");
+	getchar();
+	return 0;
+}
+
 extern "C" __declspec(dllexport) char*  __stdcall getLog() {
 	char* szSampleString = new char[5096];
 	std::char_traits<char>::copy(szSampleString, unityMsg.c_str(), unityMsg.size() + 1);
