@@ -1,0 +1,15 @@
+﻿  Enclave_t.c
+c:\users\sfuna\documents\repos\freyja\frey\frey\enclave\enclave_t.c(543): warning C4013: 関数 'strlen' は定義されていません。int 型の値を返す外部関数と見なします。
+Enclave_t.obj : error LNK2005: _ocall_function_allow
+Enclave_t.obj : error LNK2005: _ocall_pointer_in
+Enclave_t.obj : error LNK2005: _ocall_pointer_in_out
+Enclave_t.obj : error LNK2005: _ocall_pointer_out
+Enclave_t.obj : error LNK2005: _ocall_pointer_user_check
+Enclave_t.obj : error LNK2005: _ocall_print_string
+Enclave_u.obj : warning LNK4217: 
+Enclave_t.obj : error LNK2019: 
+Enclave_t.obj : error LNK2019: 
+Enclave_t.obj : error LNK2019: 
+Enclave_t.obj : error LNK2019: 
+Enclave_t.obj : error LNK2019: 
+C:\Users\sfuna\Documents\repos\Freyja\Frey\Debug\Frey.exe : fatal error LNK1120: 5
