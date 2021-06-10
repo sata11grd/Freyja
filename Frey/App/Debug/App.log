@@ -1,2 +1,12 @@
-﻿  App.cpp
-  App.vcxproj -> C:\Program Files (x86)\Intel\IntelSGXSDK\src\SampleEnclave\Debug\App.dll
+﻿  Creating untrusted proxy/bridge routines
+  App.cpp
+  Arrays.cpp
+  Functions.cpp
+  Pointers.cpp
+  Types.cpp
+  Libc.cpp
+  Libcxx.cpp
+  Thread.cpp
+  コードを生成中...
+  Enclave_u.c
+  App.vcxproj -> C:\Users\sfuna\Documents\repos\Freyja\Frey\Debug\App.dll
