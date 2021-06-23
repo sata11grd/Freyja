@@ -310,5 +310,7 @@ int SGX_CDECL main(int argc, char *argv[])
 
     printf("Enter a character before exit ...\n");
     getchar();
+	
+	exec_JS(global_eid);
     return 0;
 }

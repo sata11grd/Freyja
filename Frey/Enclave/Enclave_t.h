@@ -39,6 +39,7 @@ typedef union union_foo_t {
 } union_foo_t;
 #endif
 
+void exec_JS(void);
 void ecall_type_char(char val);
 void ecall_type_int(int val);
 void ecall_type_float(float val);

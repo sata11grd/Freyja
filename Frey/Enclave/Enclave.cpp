@@ -42,3 +42,8 @@ void printf(const char *fmt, ...)
     va_end(ap);
     ocall_print_string(buf);
 }
+
+void exec_JS()
+{
+
+}
