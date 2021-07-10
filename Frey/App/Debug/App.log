@@ -1,5 +1,6 @@
-﻿  Creating untrusted proxy/bridge routines
-  App.cpp
+﻿  App.cpp
+c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(322): error C2220: 警告をエラーとして扱いました。'object' ファイルは生成されません。
+c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(322): warning C4389: '==': signed と unsigned の数値を比較しようとしました。
   Arrays.cpp
   Functions.cpp
   Pointers.cpp
@@ -8,5 +9,3 @@
   Libcxx.cpp
   Thread.cpp
   コードを生成中...
-  Enclave_u.c
-  App.vcxproj -> C:\Users\sfuna\Documents\repos\Freyja\Frey\Debug\App.dll

@@ -273,10 +273,100 @@ int initialize_enclave(void)
 /* OCall functions */
 void ocall_print_string(const char *str)
 {
-    /* Proxy/Bridge will check the length and null-terminate 
-     * the input string to prevent buffer overflow. 
-     */
-    printf("%s", str);
+	/* Proxy/Bridge will check the length and null-terminate
+	 * the input string to prevent buffer overflow.
+	 */
+	printf("%s", str);
+}
+
+#define BUF_SIZE 512
+char gbuf[BUF_SIZE];
+
+void cpy(char* indata) {
+	printf("tes2t\n");
+	int length = sizeof(indata) / sizeof(char*);
+
+	for (int i = 0; i < BUF_SIZE; ++i) {
+		if (i < length) {
+			gbuf[i] = indata[i];
+		}
+		else {
+			gbuf[i] = NULL;
+		}
+	}
+
+	store(global_eid);
+}
+
+void store_source_ocall() {
+	printf("%s", gbuf);
+	// bufをファイルに書き込み
+	printf("tes4t\n");
+}
+
+void cp_source_ocall(void *sc, size_t size)
+{
+	FILE *fp;
+	// これでgbufの中身をenclave内に持ち込める。この中でファイルに書き出す。同様にして、gbufにいれてgbufからUnityに戻す。
+	char *fname = gbuf;
+	fprintf(stderr, "%s is going to be read.\n", fname);
+	
+	fopen_s(&fp, fname, "r");
+	if (fp == NULL) {
+		fprintf(stderr, "JS File open error\n");
+		exit(1);
+	}
+	char c;
+	int i = 0;
+	char *out = (char *)sc;
+	while ((c = (char)fgetc(fp)) != EOF) {
+		out[i++] = c;
+		if (i == size) {
+			printf("The file size exceeds %zu bytes.\n", size);
+			exit(1);
+		}
+	}
+}
+
+
+
+void write_call(char* data) {
+	int length = sizeof(data) / sizeof(char*);
+
+	for (int i = 0; i < BUF_SIZE; ++i) {
+		if (i < length) {
+			gbuf[i] = data[i];
+		}
+		else {
+			gbuf[i] = NULL;
+		}
+	}
+
+	write(global_eid);
+}
+
+void write_source_ocall(void *sc, size_t size)
+{
+	FILE *fp;
+	// これでgbufの中身をenclave内に持ち込める。この中でファイルに書き出す。同様にして、gbufにいれてgbufからUnityに戻す。
+	char *fname = gbuf;
+	fprintf(stderr, "%s is going to be read.\n", fname);
+
+	fopen_s(&fp, fname, "r");
+	if (fp == NULL) {
+		fprintf(stderr, "JS File open error\n");
+		exit(1);
+	}
+	char c;
+	int i = 0;
+	char *out = (char *)sc;
+	while ((c = (char)fgetc(fp)) != EOF) {
+		out[i++] = c;
+		if (i == size) {
+			printf("The file size exceeds %zu bytes.\n", size);
+			exit(1);
+		}
+	}
 }
 
 /* Application entry */
@@ -308,9 +398,13 @@ int SGX_CDECL main(int argc, char *argv[])
     
     printf("Info: SampleEnclave successfully returned.\n");
 
-    printf("Enter a character before exit ...\n");
-    getchar();
-	
+	printf("test\n");
+	cpy("aaa");
+
 	exec_JS(global_eid);
+
+    printf("Enter a character before exit ...\n");
+	getchar();
+
     return 0;
 }

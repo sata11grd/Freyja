@@ -44,6 +44,26 @@ typedef union union_foo_t {
 #define OCALL_PRINT_STRING_DEFINED__
 void SGX_UBRIDGE(SGX_NOCONVENTION, ocall_print_string, (const char* str));
 #endif
+#ifndef CPY_DEFINED__
+#define CPY_DEFINED__
+void SGX_UBRIDGE(SGX_NOCONVENTION, cpy, (char* indata));
+#endif
+#ifndef STORE_SOURCE_OCALL_DEFINED__
+#define STORE_SOURCE_OCALL_DEFINED__
+void SGX_UBRIDGE(SGX_NOCONVENTION, store_source_ocall, (void));
+#endif
+#ifndef CP_SOURCE_OCALL_DEFINED__
+#define CP_SOURCE_OCALL_DEFINED__
+void SGX_UBRIDGE(SGX_NOCONVENTION, cp_source_ocall, (void* ptr, size_t len));
+#endif
+#ifndef WRITE_CALL_DEFINED__
+#define WRITE_CALL_DEFINED__
+void SGX_UBRIDGE(SGX_NOCONVENTION, write_call, (char* data));
+#endif
+#ifndef WRITE_SOURCE_OCALL_DEFINED__
+#define WRITE_SOURCE_OCALL_DEFINED__
+void SGX_UBRIDGE(SGX_NOCONVENTION, write_source_ocall, (void* ptr, size_t len));
+#endif
 #ifndef OCALL_POINTER_USER_CHECK_DEFINED__
 #define OCALL_POINTER_USER_CHECK_DEFINED__
 void SGX_UBRIDGE(SGX_NOCONVENTION, ocall_pointer_user_check, (int* val));
@@ -89,7 +109,9 @@ int SGX_UBRIDGE(SGX_CDECL, sgx_thread_setwait_untrusted_events_ocall, (const voi
 int SGX_UBRIDGE(SGX_CDECL, sgx_thread_set_multiple_untrusted_events_ocall, (const void** waiters, size_t total));
 #endif
 
+sgx_status_t store(sgx_enclave_id_t eid);
 sgx_status_t exec_JS(sgx_enclave_id_t eid);
+sgx_status_t write(sgx_enclave_id_t eid);
 sgx_status_t ecall_type_char(sgx_enclave_id_t eid, char val);
 sgx_status_t ecall_type_int(sgx_enclave_id_t eid, int val);
 sgx_status_t ecall_type_float(sgx_enclave_id_t eid, float val);
