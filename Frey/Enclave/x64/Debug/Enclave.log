@@ -13,6 +13,7 @@
   Enclave.vcxproj -> C:\Users\sfuna\Documents\repos\Freyja\Frey\x64\Debug\Enclave.dll
   sign the enclave
   The required memory is 0x418000.
+  Succeed.
   <EnclaveConfiguration>
       <ProdID>0</ProdID>
       <ISVSVN>0</ISVSVN>
@@ -24,4 +25,3 @@
       <MiscSelect>0</MiscSelect>
       <MiscMask>0xFFFFFFFF</MiscMask>
   </EnclaveConfiguration>
-  Succeed.

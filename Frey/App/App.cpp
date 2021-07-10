@@ -304,7 +304,7 @@ void frey_write_call(char* data) {
 void frey_write_source_ocall(void *sc, size_t size)
 {
 	FILE* fp = fopen("C:\\Users\\sfuna\\Desktop\\test_file.cpp", "w");
-	fprintf(fp, gbuf); // ÉtÉ@ÉCÉãÇ…èëÇ≠
+	fprintf(fp, gbuf);
 	fclose(fp);
 }
 #pragma endregion

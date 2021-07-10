@@ -1,9 +1,9 @@
 ﻿  Creating untrusted proxy/bridge routines
   App.cpp
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(309): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(306): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\stdio.h(208): note: 'fopen' の宣言を確認してください
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(307): warning C4100: 'size': 引数は関数の本体部で 1 度も参照されません。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(307): warning C4100: 'sc': 引数は関数の本体部で 1 度も参照されません。
+c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(304): warning C4100: 'size': 引数は関数の本体部で 1 度も参照されません。
+c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(304): warning C4100: 'sc': 引数は関数の本体部で 1 度も参照されません。
   Arrays.cpp
   Functions.cpp
   Pointers.cpp
@@ -12,6 +12,6 @@ c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(307): warning C4100: 'sc'
   Libcxx.cpp
   Thread.cpp
   コードを生成中...
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(292): warning C4715: 'frey_init': 値を返さないコントロール パスがあります。
+c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(289): warning C4715: 'frey_init': 値を返さないコントロール パスがあります。
   Enclave_u.c
   App.vcxproj -> C:\Users\sfuna\Documents\repos\Freyja\Frey\x64\Debug\App.exe
