@@ -280,30 +280,13 @@ void ocall_print_string(const char *str)
 }
 
 #define BUF_SIZE 512
-#define LOG_SIZE 1024
 
 char gbuf[BUF_SIZE];
-char log[LOG_SIZE];
 
-void add_log(char* value) {
-	strcpy_s(log, value);
-}
-
-void print_log() {
-	printf("%s", log);
-}
-
-void print_gbuf_stat() {
-	printf("gbuf stat: %s\n", gbuf);
-}
-
+#pragma region Write Call
 void frey_write_call(char* data) {
 	strcpy_s(gbuf, data);
 	frey_write(global_eid);
-}
-
-void frey_read_call() {
-	frey_read(global_eid);
 }
 
 void frey_write_source_ocall(void *sc, size_t size)
@@ -311,6 +294,13 @@ void frey_write_source_ocall(void *sc, size_t size)
 	FILE* fp = fopen("C:\\Users\\sfuna\\Desktop\\test_file.cpp", "w");
 	fprintf(fp, gbuf); // ÉtÉ@ÉCÉãÇ…èëÇ≠
 	fclose(fp);
+}
+#pragma endregion
+
+
+#pragma region Read Call
+void frey_read_call() {
+	frey_read(global_eid);
 }
 
 void frey_read_source_ocall(void *sc, size_t size) {
@@ -335,6 +325,26 @@ void frey_read_source_ocall(void *sc, size_t size) {
 	}
 	strcpy_s(gbuf, out);
 }
+#pragma endregion
+
+#pragma region Logging
+#define LOG_SIZE 1024
+
+char log[LOG_SIZE];
+
+void add_log(char* value) {
+	strcpy_s(log, value);
+}
+
+void print_log() {
+	printf("%s", log);
+}
+
+void print_gbuf_stat() {
+	printf("gbuf stat: %s\n", gbuf);
+}
+
+#pragma endregion Logging
 
 /* Application entry */
 int SGX_CDECL main(int argc, char *argv[])
