@@ -41,15 +41,15 @@ void printf(const char *fmt, ...)
     va_start(ap, fmt);
     vsnprintf(buf, BUFSIZ, fmt, ap);
     va_end(ap);
-    ocall_print_string(buf);
+	ocall_print_string(buf);
 }
 
 #define MAX_FILE_SIZE 10240
 
-void write() {
+void frey_write() {
 	int size = MAX_FILE_SIZE;
 	char *sc = new char[size];
 	std::string ssc = sc;
 	delete[] sc;
-	write_source_ocall((void *)sc, size);
+	frey_write_source_ocall((void *)sc, size);
 }

@@ -114,14 +114,14 @@ typedef struct ms_ocall_print_string_t {
 	const char* ms_str;
 } ms_ocall_print_string_t;
 
-typedef struct ms_write_call_t {
+typedef struct ms_frey_write_call_t {
 	char* ms_data;
-} ms_write_call_t;
+} ms_frey_write_call_t;
 
-typedef struct ms_write_source_ocall_t {
+typedef struct ms_frey_write_source_ocall_t {
 	void* ms_ptr;
 	size_t ms_len;
-} ms_write_source_ocall_t;
+} ms_frey_write_source_ocall_t;
 
 typedef struct ms_ocall_pointer_user_check_t {
 	int* ms_val;
@@ -183,18 +183,18 @@ static sgx_status_t SGX_CDECL Enclave_ocall_print_string(void* pms)
 	return SGX_SUCCESS;
 }
 
-static sgx_status_t SGX_CDECL Enclave_write_call(void* pms)
+static sgx_status_t SGX_CDECL Enclave_frey_write_call(void* pms)
 {
-	ms_write_call_t* ms = SGX_CAST(ms_write_call_t*, pms);
-	write_call(ms->ms_data);
+	ms_frey_write_call_t* ms = SGX_CAST(ms_frey_write_call_t*, pms);
+	frey_write_call(ms->ms_data);
 
 	return SGX_SUCCESS;
 }
 
-static sgx_status_t SGX_CDECL Enclave_write_source_ocall(void* pms)
+static sgx_status_t SGX_CDECL Enclave_frey_write_source_ocall(void* pms)
 {
-	ms_write_source_ocall_t* ms = SGX_CAST(ms_write_source_ocall_t*, pms);
-	write_source_ocall(ms->ms_ptr, ms->ms_len);
+	ms_frey_write_source_ocall_t* ms = SGX_CAST(ms_frey_write_source_ocall_t*, pms);
+	frey_write_source_ocall(ms->ms_ptr, ms->ms_len);
 
 	return SGX_SUCCESS;
 }
@@ -293,8 +293,8 @@ static const struct {
 	14,
 	{
 		(void*)(uintptr_t)Enclave_ocall_print_string,
-		(void*)(uintptr_t)Enclave_write_call,
-		(void*)(uintptr_t)Enclave_write_source_ocall,
+		(void*)(uintptr_t)Enclave_frey_write_call,
+		(void*)(uintptr_t)Enclave_frey_write_source_ocall,
 		(void*)(uintptr_t)Enclave_ocall_pointer_user_check,
 		(void*)(uintptr_t)Enclave_ocall_pointer_in,
 		(void*)(uintptr_t)Enclave_ocall_pointer_out,
@@ -309,7 +309,7 @@ static const struct {
 	}
 };
 
-sgx_status_t write(sgx_enclave_id_t eid)
+sgx_status_t frey_write(sgx_enclave_id_t eid)
 {
 	sgx_status_t status;
 	status = sgx_ecall(eid, 0, &ocall_table_Enclave, NULL);

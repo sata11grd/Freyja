@@ -140,14 +140,14 @@ typedef struct ms_ocall_print_string_t {
 	const char* ms_str;
 } ms_ocall_print_string_t;
 
-typedef struct ms_write_call_t {
+typedef struct ms_frey_write_call_t {
 	char* ms_data;
-} ms_write_call_t;
+} ms_frey_write_call_t;
 
-typedef struct ms_write_source_ocall_t {
+typedef struct ms_frey_write_source_ocall_t {
 	void* ms_ptr;
 	size_t ms_len;
-} ms_write_source_ocall_t;
+} ms_frey_write_source_ocall_t;
 
 typedef struct ms_ocall_pointer_user_check_t {
 	int* ms_val;
@@ -207,11 +207,11 @@ typedef struct ms_sgx_thread_set_multiple_untrusted_events_ocall_t {
 #pragma warning(disable: 4200)
 #endif
 
-static sgx_status_t SGX_CDECL sgx_write(void* pms)
+static sgx_status_t SGX_CDECL sgx_frey_write(void* pms)
 {
 	sgx_status_t status = SGX_SUCCESS;
 	if (pms != NULL) return SGX_ERROR_INVALID_PARAMETER;
-	write();
+	frey_write();
 	return status;
 }
 
@@ -1110,7 +1110,7 @@ SGX_EXTERNC const struct {
 } g_ecall_table = {
 	34,
 	{
-		{(void*)(uintptr_t)sgx_write, 0, 0},
+		{(void*)(uintptr_t)sgx_frey_write, 0, 0},
 		{(void*)(uintptr_t)sgx_ecall_type_char, 0, 0},
 		{(void*)(uintptr_t)sgx_ecall_type_int, 0, 0},
 		{(void*)(uintptr_t)sgx_ecall_type_float, 0, 0},
@@ -1219,13 +1219,13 @@ sgx_status_t SGX_CDECL ocall_print_string(const char* str)
 	return status;
 }
 
-sgx_status_t SGX_CDECL write_call(char* data)
+sgx_status_t SGX_CDECL frey_write_call(char* data)
 {
 	sgx_status_t status = SGX_SUCCESS;
 	size_t _len_data = data ? strlen(data) + 1 : 0;
 
-	ms_write_call_t* ms = NULL;
-	size_t ocalloc_size = sizeof(ms_write_call_t);
+	ms_frey_write_call_t* ms = NULL;
+	size_t ocalloc_size = sizeof(ms_frey_write_call_t);
 	void *__tmp = NULL;
 
 
@@ -1239,9 +1239,9 @@ sgx_status_t SGX_CDECL write_call(char* data)
 		sgx_ocfree();
 		return SGX_ERROR_UNEXPECTED;
 	}
-	ms = (ms_write_call_t*)__tmp;
-	__tmp = (void *)((size_t)__tmp + sizeof(ms_write_call_t));
-	ocalloc_size -= sizeof(ms_write_call_t);
+	ms = (ms_frey_write_call_t*)__tmp;
+	__tmp = (void *)((size_t)__tmp + sizeof(ms_frey_write_call_t));
+	ocalloc_size -= sizeof(ms_frey_write_call_t);
 
 	if (data != NULL) {
 		ms->ms_data = (char*)__tmp;
@@ -1267,13 +1267,13 @@ sgx_status_t SGX_CDECL write_call(char* data)
 	return status;
 }
 
-sgx_status_t SGX_CDECL write_source_ocall(void* ptr, size_t len)
+sgx_status_t SGX_CDECL frey_write_source_ocall(void* ptr, size_t len)
 {
 	sgx_status_t status = SGX_SUCCESS;
 	size_t _len_ptr = len;
 
-	ms_write_source_ocall_t* ms = NULL;
-	size_t ocalloc_size = sizeof(ms_write_source_ocall_t);
+	ms_frey_write_source_ocall_t* ms = NULL;
+	size_t ocalloc_size = sizeof(ms_frey_write_source_ocall_t);
 	void *__tmp = NULL;
 
 	void *__tmp_ptr = NULL;
@@ -1288,9 +1288,9 @@ sgx_status_t SGX_CDECL write_source_ocall(void* ptr, size_t len)
 		sgx_ocfree();
 		return SGX_ERROR_UNEXPECTED;
 	}
-	ms = (ms_write_source_ocall_t*)__tmp;
-	__tmp = (void *)((size_t)__tmp + sizeof(ms_write_source_ocall_t));
-	ocalloc_size -= sizeof(ms_write_source_ocall_t);
+	ms = (ms_frey_write_source_ocall_t*)__tmp;
+	__tmp = (void *)((size_t)__tmp + sizeof(ms_frey_write_source_ocall_t));
+	ocalloc_size -= sizeof(ms_frey_write_source_ocall_t);
 
 	if (ptr != NULL) {
 		ms->ms_ptr = (void*)__tmp;

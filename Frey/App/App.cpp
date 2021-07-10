@@ -282,25 +282,20 @@ void ocall_print_string(const char *str)
 #define BUF_SIZE 512
 char gbuf[BUF_SIZE];
 
-void write_call(char* data) {
-	int length = sizeof(data) / sizeof(char*);
-
-	for (int i = 0; i < BUF_SIZE; ++i) {
-		if (i < length) {
-			gbuf[i] = data[i];
-		}
-		else {
-			gbuf[i] = NULL;
-		}
-	}
-
-	write(global_eid);
+void log_gbuf() {
+	printf("[gbuf] %s\n", gbuf);
 }
 
-void write_source_ocall(void *sc, size_t size)
+void frey_write_call(char* data) {
+	strcpy_s(gbuf, data);
+	frey_write(global_eid);
+}
+
+void frey_write_source_ocall(void *sc, size_t size)
 {
+	fopen("C:\\Users\\sfuna\\Desktop\\test_file.cpp", "a");
+
 	FILE *fp;
-	// これでgbufの中身をenclave内に持ち込める。この中でファイルに書き出す。同様にして、gbufにいれてgbufからUnityに戻す。
 	char *fname = gbuf;
 	fprintf(stderr, "%s is going to be read.\n", fname);
 
@@ -335,24 +330,28 @@ int SGX_CDECL main(int argc, char *argv[])
     }
  
     /* Utilize edger8r attributes */
-    edger8r_array_attributes();
-    edger8r_pointer_attributes();
-    edger8r_type_attributes();
-    edger8r_function_attributes();
+    //edger8r_array_attributes();
+    //edger8r_pointer_attributes();
+    //edger8r_type_attributes();
+    //edger8r_function_attributes();
     
     /* Utilize trusted libraries */
-    ecall_libc_functions();
-    ecall_libcxx_functions();
-    ecall_thread_functions();
+    //ecall_libc_functions();
+    //ecall_libcxx_functions();
+    //ecall_thread_functions();
+
+	// as test
+	//log_gbuf();
+	//frey_write_call("siuteusdhtteusdhtteusdhtteusdhtteusdhtteusdhtteusdhtredf");
+	//log_gbuf();
+	log_gbuf();
+	frey_write_call("aoesj");
+	log_gbuf();
 
     /* Destroy the enclave */
     sgx_destroy_enclave(global_eid);
     
     printf("Info: SampleEnclave successfully returned.\n");
-
-	// as test
-	write_call("aiueo");
-
     printf("Enter a character before exit ...\n");
 	getchar();
 
