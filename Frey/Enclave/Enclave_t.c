@@ -140,14 +140,15 @@ typedef struct ms_ocall_print_string_t {
 	const char* ms_str;
 } ms_ocall_print_string_t;
 
-typedef struct ms_frey_write_call_t {
-	char* ms_data;
-} ms_frey_write_call_t;
-
 typedef struct ms_frey_write_source_ocall_t {
 	void* ms_ptr;
 	size_t ms_len;
 } ms_frey_write_source_ocall_t;
+
+typedef struct ms_frey_read_source_ocall_t {
+	void* ms_ptr;
+	size_t ms_len;
+} ms_frey_read_source_ocall_t;
 
 typedef struct ms_ocall_pointer_user_check_t {
 	int* ms_val;
@@ -212,6 +213,14 @@ static sgx_status_t SGX_CDECL sgx_frey_write(void* pms)
 	sgx_status_t status = SGX_SUCCESS;
 	if (pms != NULL) return SGX_ERROR_INVALID_PARAMETER;
 	frey_write();
+	return status;
+}
+
+static sgx_status_t SGX_CDECL sgx_frey_read(void* pms)
+{
+	sgx_status_t status = SGX_SUCCESS;
+	if (pms != NULL) return SGX_ERROR_INVALID_PARAMETER;
+	frey_read();
 	return status;
 }
 
@@ -1106,11 +1115,12 @@ static sgx_status_t SGX_CDECL sgx_ecall_consumer(void* pms)
 
 SGX_EXTERNC const struct {
 	size_t nr_ecall;
-	struct {void* call_addr; uint8_t is_priv; uint8_t is_switchless;} ecall_table[34];
+	struct {void* call_addr; uint8_t is_priv; uint8_t is_switchless;} ecall_table[35];
 } g_ecall_table = {
-	34,
+	35,
 	{
 		{(void*)(uintptr_t)sgx_frey_write, 0, 0},
+		{(void*)(uintptr_t)sgx_frey_read, 0, 0},
 		{(void*)(uintptr_t)sgx_ecall_type_char, 0, 0},
 		{(void*)(uintptr_t)sgx_ecall_type_int, 0, 0},
 		{(void*)(uintptr_t)sgx_ecall_type_float, 0, 0},
@@ -1149,24 +1159,24 @@ SGX_EXTERNC const struct {
 
 SGX_EXTERNC const struct {
 	size_t nr_ocall;
-	uint8_t entry_table[14][34];
+	uint8_t entry_table[14][35];
 } g_dyn_entry_table = {
 	14,
 	{
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
 	}
 };
 
@@ -1219,54 +1229,6 @@ sgx_status_t SGX_CDECL ocall_print_string(const char* str)
 	return status;
 }
 
-sgx_status_t SGX_CDECL frey_write_call(char* data)
-{
-	sgx_status_t status = SGX_SUCCESS;
-	size_t _len_data = data ? strlen(data) + 1 : 0;
-
-	ms_frey_write_call_t* ms = NULL;
-	size_t ocalloc_size = sizeof(ms_frey_write_call_t);
-	void *__tmp = NULL;
-
-
-	CHECK_ENCLAVE_POINTER(data, _len_data);
-
-	if (ADD_ASSIGN_OVERFLOW(ocalloc_size, (data != NULL) ? _len_data : 0))
-		return SGX_ERROR_INVALID_PARAMETER;
-
-	__tmp = sgx_ocalloc(ocalloc_size);
-	if (__tmp == NULL) {
-		sgx_ocfree();
-		return SGX_ERROR_UNEXPECTED;
-	}
-	ms = (ms_frey_write_call_t*)__tmp;
-	__tmp = (void *)((size_t)__tmp + sizeof(ms_frey_write_call_t));
-	ocalloc_size -= sizeof(ms_frey_write_call_t);
-
-	if (data != NULL) {
-		ms->ms_data = (char*)__tmp;
-		if (_len_data % sizeof(*data) != 0) {
-			sgx_ocfree();
-			return SGX_ERROR_INVALID_PARAMETER;
-		}
-		if (memcpy_s(__tmp, ocalloc_size, data, _len_data)) {
-			sgx_ocfree();
-			return SGX_ERROR_UNEXPECTED;
-		}
-		__tmp = (void *)((size_t)__tmp + _len_data);
-		ocalloc_size -= _len_data;
-	} else {
-		ms->ms_data = NULL;
-	}
-	
-	status = sgx_ocall(1, ms);
-
-	if (status == SGX_SUCCESS) {
-	}
-	sgx_ocfree();
-	return status;
-}
-
 sgx_status_t SGX_CDECL frey_write_source_ocall(void* ptr, size_t len)
 {
 	sgx_status_t status = SGX_SUCCESS;
@@ -1291,6 +1253,56 @@ sgx_status_t SGX_CDECL frey_write_source_ocall(void* ptr, size_t len)
 	ms = (ms_frey_write_source_ocall_t*)__tmp;
 	__tmp = (void *)((size_t)__tmp + sizeof(ms_frey_write_source_ocall_t));
 	ocalloc_size -= sizeof(ms_frey_write_source_ocall_t);
+
+	if (ptr != NULL) {
+		ms->ms_ptr = (void*)__tmp;
+		__tmp_ptr = __tmp;
+		memset(__tmp_ptr, 0, _len_ptr);
+		__tmp = (void *)((size_t)__tmp + _len_ptr);
+		ocalloc_size -= _len_ptr;
+	} else {
+		ms->ms_ptr = NULL;
+	}
+	
+	ms->ms_len = len;
+	status = sgx_ocall(1, ms);
+
+	if (status == SGX_SUCCESS) {
+		if (ptr) {
+			if (memcpy_s((void*)ptr, _len_ptr, __tmp_ptr, _len_ptr)) {
+				sgx_ocfree();
+				return SGX_ERROR_UNEXPECTED;
+			}
+		}
+	}
+	sgx_ocfree();
+	return status;
+}
+
+sgx_status_t SGX_CDECL frey_read_source_ocall(void* ptr, size_t len)
+{
+	sgx_status_t status = SGX_SUCCESS;
+	size_t _len_ptr = len;
+
+	ms_frey_read_source_ocall_t* ms = NULL;
+	size_t ocalloc_size = sizeof(ms_frey_read_source_ocall_t);
+	void *__tmp = NULL;
+
+	void *__tmp_ptr = NULL;
+
+	CHECK_ENCLAVE_POINTER(ptr, _len_ptr);
+
+	if (ADD_ASSIGN_OVERFLOW(ocalloc_size, (ptr != NULL) ? _len_ptr : 0))
+		return SGX_ERROR_INVALID_PARAMETER;
+
+	__tmp = sgx_ocalloc(ocalloc_size);
+	if (__tmp == NULL) {
+		sgx_ocfree();
+		return SGX_ERROR_UNEXPECTED;
+	}
+	ms = (ms_frey_read_source_ocall_t*)__tmp;
+	__tmp = (void *)((size_t)__tmp + sizeof(ms_frey_read_source_ocall_t));
+	ocalloc_size -= sizeof(ms_frey_read_source_ocall_t);
 
 	if (ptr != NULL) {
 		ms->ms_ptr = (void*)__tmp;

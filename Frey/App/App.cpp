@@ -280,10 +280,21 @@ void ocall_print_string(const char *str)
 }
 
 #define BUF_SIZE 512
-char gbuf[BUF_SIZE];
+#define LOG_SIZE 1024
 
-void log_gbuf() {
-	printf("[gbuf] %s\n", gbuf);
+char gbuf[BUF_SIZE];
+char log[LOG_SIZE];
+
+void add_log(char* value) {
+	strcpy_s(log, value);
+}
+
+void print_log() {
+	printf("%s", log);
+}
+
+void print_gbuf_stat() {
+	printf("gbuf stat: %s\n", gbuf);
 }
 
 void frey_write_call(char* data) {
@@ -291,15 +302,20 @@ void frey_write_call(char* data) {
 	frey_write(global_eid);
 }
 
+void frey_read_call() {
+	frey_read(global_eid);
+}
+
 void frey_write_source_ocall(void *sc, size_t size)
 {
 	FILE* fp = fopen("C:\\Users\\sfuna\\Desktop\\test_file.cpp", "w");
 	fprintf(fp, gbuf); // ÉtÉ@ÉCÉãÇ…èëÇ≠
 	fclose(fp);
+}
 
-	/*
+void frey_read_source_ocall(void *sc, size_t size) {
 	FILE *fp;
-	char *fname = gbuf;
+	char *fname = "C:\\Users\\sfuna\\Desktop\\test_file.cpp";
 	fprintf(stderr, "%s is going to be read.\n", fname);
 
 	fopen_s(&fp, fname, "r");
@@ -317,7 +333,7 @@ void frey_write_source_ocall(void *sc, size_t size)
 			exit(1);
 		}
 	}
-	*/
+	strcpy_s(gbuf, out);
 }
 
 /* Application entry */
@@ -344,9 +360,11 @@ int SGX_CDECL main(int argc, char *argv[])
     //ecall_libcxx_functions();
     //ecall_thread_functions();
 
-	log_gbuf();
-	frey_write_call("aoesj");
-	log_gbuf();
+	//frey_write_call("aoesj");
+	print_gbuf_stat();
+	frey_read_call();
+	print_gbuf_stat();
+	print_log();
 
     /* Destroy the enclave */
     sgx_destroy_enclave(global_eid);

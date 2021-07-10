@@ -44,13 +44,13 @@ typedef union union_foo_t {
 #define OCALL_PRINT_STRING_DEFINED__
 void SGX_UBRIDGE(SGX_NOCONVENTION, ocall_print_string, (const char* str));
 #endif
-#ifndef FREY_WRITE_CALL_DEFINED__
-#define FREY_WRITE_CALL_DEFINED__
-void SGX_UBRIDGE(SGX_NOCONVENTION, frey_write_call, (char* data));
-#endif
 #ifndef FREY_WRITE_SOURCE_OCALL_DEFINED__
 #define FREY_WRITE_SOURCE_OCALL_DEFINED__
 void SGX_UBRIDGE(SGX_NOCONVENTION, frey_write_source_ocall, (void* ptr, size_t len));
+#endif
+#ifndef FREY_READ_SOURCE_OCALL_DEFINED__
+#define FREY_READ_SOURCE_OCALL_DEFINED__
+void SGX_UBRIDGE(SGX_NOCONVENTION, frey_read_source_ocall, (void* ptr, size_t len));
 #endif
 #ifndef OCALL_POINTER_USER_CHECK_DEFINED__
 #define OCALL_POINTER_USER_CHECK_DEFINED__
@@ -98,6 +98,7 @@ int SGX_UBRIDGE(SGX_CDECL, sgx_thread_set_multiple_untrusted_events_ocall, (cons
 #endif
 
 sgx_status_t frey_write(sgx_enclave_id_t eid);
+sgx_status_t frey_read(sgx_enclave_id_t eid);
 sgx_status_t ecall_type_char(sgx_enclave_id_t eid, char val);
 sgx_status_t ecall_type_int(sgx_enclave_id_t eid, int val);
 sgx_status_t ecall_type_float(sgx_enclave_id_t eid, float val);

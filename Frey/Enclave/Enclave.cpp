@@ -53,3 +53,11 @@ void frey_write() {
 	delete[] sc;
 	frey_write_source_ocall((void *)sc, size);
 }
+
+void frey_read() {
+	int size = MAX_FILE_SIZE;
+	char *sc = new char[size];
+	std::string ssc = sc;
+	delete[] sc;
+	frey_read_source_ocall((void *)sc, size);
+}
