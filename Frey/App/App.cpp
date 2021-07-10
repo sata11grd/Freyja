@@ -293,8 +293,11 @@ void frey_write_call(char* data) {
 
 void frey_write_source_ocall(void *sc, size_t size)
 {
-	fopen("C:\\Users\\sfuna\\Desktop\\test_file.cpp", "a");
+	FILE* fp = fopen("C:\\Users\\sfuna\\Desktop\\test_file.cpp", "w");
+	fprintf(fp, gbuf); // ÉtÉ@ÉCÉãÇ…èëÇ≠
+	fclose(fp);
 
+	/*
 	FILE *fp;
 	char *fname = gbuf;
 	fprintf(stderr, "%s is going to be read.\n", fname);
@@ -314,6 +317,7 @@ void frey_write_source_ocall(void *sc, size_t size)
 			exit(1);
 		}
 	}
+	*/
 }
 
 /* Application entry */
@@ -340,10 +344,6 @@ int SGX_CDECL main(int argc, char *argv[])
     //ecall_libcxx_functions();
     //ecall_thread_functions();
 
-	// as test
-	//log_gbuf();
-	//frey_write_call("siuteusdhtteusdhtteusdhtteusdhtteusdhtteusdhtteusdhtredf");
-	//log_gbuf();
 	log_gbuf();
 	frey_write_call("aoesj");
 	log_gbuf();
