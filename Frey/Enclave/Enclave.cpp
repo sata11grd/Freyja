@@ -44,28 +44,12 @@ void printf(const char *fmt, ...)
     ocall_print_string(buf);
 }
 
-void store()
-{
-	printf("te3st\n");
-	store_source_ocall();
-}
+#define MAX_FILE_SIZE 10240
 
-#define MAX_JS_FILE_SIZE 10240
 void write() {
-	int size = MAX_JS_FILE_SIZE;
+	int size = MAX_FILE_SIZE;
 	char *sc = new char[size];
-	cp_source_ocall((void *)sc, size);
 	std::string ssc = sc;
 	delete[] sc;
 	write_source_ocall((void *)sc, size);
-}
-
-void exec_JS() {
-	// Read js source file into ssc
-	int size = MAX_JS_FILE_SIZE;
-	char *sc = new char[size];
-	cp_source_ocall((void *)sc, size);
-	std::string ssc = sc;
-	delete[] sc;
-	cp_source_ocall((void *)sc, size);
 }

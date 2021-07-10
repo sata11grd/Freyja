@@ -1,12 +1,3 @@
-﻿  Creating untrusted proxy/bridge routines
-  App.cpp
-  Arrays.cpp
-  Functions.cpp
-  Pointers.cpp
-  Types.cpp
-  Libc.cpp
-  Libcxx.cpp
-  Thread.cpp
-  コードを生成中...
+﻿  App.cpp
   Enclave_u.c
   App.vcxproj -> C:\Users\sfuna\Documents\repos\Freyja\Frey\x64\Debug\App.exe

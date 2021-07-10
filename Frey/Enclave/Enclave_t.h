@@ -39,8 +39,6 @@ typedef union union_foo_t {
 } union_foo_t;
 #endif
 
-void store(void);
-void exec_JS(void);
 void write(void);
 void ecall_type_char(char val);
 void ecall_type_int(int val);
@@ -77,9 +75,6 @@ void ecall_producer(void);
 void ecall_consumer(void);
 
 sgx_status_t SGX_CDECL ocall_print_string(const char* str);
-sgx_status_t SGX_CDECL cpy(char* indata);
-sgx_status_t SGX_CDECL store_source_ocall(void);
-sgx_status_t SGX_CDECL cp_source_ocall(void* ptr, size_t len);
 sgx_status_t SGX_CDECL write_call(char* data);
 sgx_status_t SGX_CDECL write_source_ocall(void* ptr, size_t len);
 sgx_status_t SGX_CDECL ocall_pointer_user_check(int* val);

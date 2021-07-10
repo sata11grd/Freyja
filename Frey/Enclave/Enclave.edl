@@ -25,15 +25,10 @@ enclave {
      *  [string]: specifies 'str' is a NULL terminated buffer.
      */
 	trusted {
-		public void store();
-		public void exec_JS();
 		public void write();
 	};
     untrusted {
         void ocall_print_string([in, string] const char *str);
-        void cpy([in, string] char* indata);
-		void store_source_ocall();
-        void cp_source_ocall([out, size=len] void *ptr, size_t len);    
         void write_call([in, string] char* data);
         void write_source_ocall([out, size=len] void *ptr, size_t len);    
     };
