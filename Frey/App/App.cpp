@@ -283,10 +283,24 @@ void ocall_print_string(const char *str)
 
 char gbuf[BUF_SIZE];
 
+#pragma region Frey Base Funcs
+int frey_init() {
+	if (initialize_enclave() < 0) {
+		return -1;
+	}
+}
+
+void frey_finalize() {
+	sgx_destroy_enclave(global_eid);
+}
+#pragma endregion Frey Base Funcs
+
 #pragma region Write Call
 void frey_write_call(char* data) {
+	frey_init();
 	strcpy_s(gbuf, data);
 	frey_write(global_eid);
+	frey_finalize();
 }
 
 void frey_write_source_ocall(void *sc, size_t size)
@@ -297,10 +311,11 @@ void frey_write_source_ocall(void *sc, size_t size)
 }
 #pragma endregion
 
-
 #pragma region Read Call
 void frey_read_call() {
+	frey_init();
 	frey_read(global_eid);
+	frey_finalize();
 }
 
 void frey_read_source_ocall(void *sc, size_t size) {
@@ -346,29 +361,10 @@ void print_gbuf_stat() {
 
 #pragma endregion Logging
 
-/* Application entry */
 int SGX_CDECL main(int argc, char *argv[])
 {
     (void)(argc);
     (void)(argv);
-
-    /* Initialize the enclave */
-    if(initialize_enclave() < 0){
-        printf("Enter a character before exit ...\n");
-        getchar();
-        return -1; 
-    }
- 
-    /* Utilize edger8r attributes */
-    //edger8r_array_attributes();
-    //edger8r_pointer_attributes();
-    //edger8r_type_attributes();
-    //edger8r_function_attributes();
-    
-    /* Utilize trusted libraries */
-    //ecall_libc_functions();
-    //ecall_libcxx_functions();
-    //ecall_thread_functions();
 
 	//frey_write_call("aoesj");
 	print_gbuf_stat();
@@ -377,9 +373,7 @@ int SGX_CDECL main(int argc, char *argv[])
 	print_log();
 
     /* Destroy the enclave */
-    sgx_destroy_enclave(global_eid);
     
-    printf("Info: SampleEnclave successfully returned.\n");
     printf("Enter a character before exit ...\n");
 	getchar();
 
