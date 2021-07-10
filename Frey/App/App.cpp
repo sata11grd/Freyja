@@ -39,6 +39,7 @@
 #include "App.h"
 #include "Enclave_u.h"
 
+#pragma region Enclave Funcs
 /* Global EID shared by multiple threads */
 sgx_enclave_id_t global_eid = 0;
 
@@ -269,13 +270,10 @@ int initialize_enclave(void)
 #endif
     return 0;
 }
+#pragma endregion
 
-/* OCall functions */
 void ocall_print_string(const char *str)
 {
-	/* Proxy/Bridge will check the length and null-terminate
-	 * the input string to prevent buffer overflow.
-	 */
 	printf("%s", str);
 }
 
@@ -293,7 +291,7 @@ int frey_init() {
 void frey_finalize() {
 	sgx_destroy_enclave(global_eid);
 }
-#pragma endregion Frey Base Funcs
+#pragma endregion 
 
 #pragma region Write Call
 void frey_write_call(char* data) {
@@ -359,7 +357,7 @@ void print_gbuf_stat() {
 	printf("gbuf stat: %s\n", gbuf);
 }
 
-#pragma endregion Logging
+#pragma endregion 
 
 int SGX_CDECL main(int argc, char *argv[])
 {
@@ -370,10 +368,7 @@ int SGX_CDECL main(int argc, char *argv[])
 	print_gbuf_stat();
 	frey_read_call();
 	print_gbuf_stat();
-	print_log();
 
-    /* Destroy the enclave */
-    
     printf("Enter a character before exit ...\n");
 	getchar();
 
