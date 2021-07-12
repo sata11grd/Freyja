@@ -28,17 +28,34 @@
 
 #include "Enclave.h"
 #include "Enclave_t.h"  /* print_string */
+#include <string>
 
-/* 
- * printf: 
- *   Invokes OCALL to display the enclave buffer to the terminal.
- */
 void printf(const char *fmt, ...)
 {
-    char buf[BUFSIZ] = {'\0'};
-    va_list ap;
-    va_start(ap, fmt);
-    vsnprintf(buf, BUFSIZ, fmt, ap);
-    va_end(ap);
-    ocall_print_string(buf);
+	char buf[BUFSIZ] = { '\0' };
+	va_list ap;
+	va_start(ap, fmt);
+	vsnprintf(buf, BUFSIZ, fmt, ap);
+	va_end(ap);
+	ocall_print_string(buf);
 }
+
+#define MAX_FILE_SIZE 10240
+
+#pragma region Frey Funcs
+void frey_write() {
+	int size = MAX_FILE_SIZE;
+	char *sc = new char[size];
+	std::string ssc = sc;
+	delete[] sc;
+	frey_write_source_ocall((void *)sc, size);
+}
+
+void frey_read() {
+	int size = MAX_FILE_SIZE;
+	char *sc = new char[size];
+	std::string ssc = sc;
+	delete[] sc;
+	frey_read_source_ocall((void *)sc, size);
+}
+#pragma endregion

@@ -22,6 +22,7 @@
  *   suppliers or licensors in any way.
  *
  */
+
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
@@ -37,132 +38,118 @@
 #include "sgx_urts.h"
 #include "App.h"
 #include "Enclave_u.h"
-#include <string>
-#include <iostream>
 
-std::string unityMsg = "";
-
-/* Global EID shared by multiple threads */
+#pragma region Enclave Funcs
+ /* Global EID shared by multiple threads */
 sgx_enclave_id_t global_eid = 0;
 
 typedef struct _sgx_errlist_t {
-    sgx_status_t err;
-    const char *msg;
-    const char *sug; /* Suggestion */
+	sgx_status_t err;
+	const char *msg;
+	const char *sug; /* Suggestion */
 } sgx_errlist_t;
 
 /* Error code returned by sgx_create_enclave */
 static sgx_errlist_t sgx_errlist[] = {
-    {
-        SGX_ERROR_UNEXPECTED,
-        "Unexpected error occurred.",
-        NULL
-    },
-    {
-        SGX_ERROR_INVALID_PARAMETER,
-        "Invalid parameter.",
-        NULL
-    },
-    {
-        SGX_ERROR_OUT_OF_MEMORY,
-        "Out of memory.",
-        NULL
-    },
-    {
-        SGX_ERROR_ENCLAVE_LOST,
-        "Power transition occurred.",
-        "Please refer to the sample \"PowerTransition\" for details."
-    },
-    {
-        SGX_ERROR_INVALID_ENCLAVE,
-        "Invalid enclave image.",
-        NULL
-    },
-    {
-        SGX_ERROR_INVALID_ENCLAVE_ID,
-        "Invalid enclave identification.",
-        NULL
-    },
-    {
-        SGX_ERROR_INVALID_SIGNATURE,
-        "Invalid enclave signature.",
-        NULL
-    },
-    {
-        SGX_ERROR_OUT_OF_EPC,
-        "Out of EPC memory.",
-        NULL
-    },
-    {
-        SGX_ERROR_NO_DEVICE,
-        "Invalid SGX device.",
-        "Please make sure SGX module is enabled in the BIOS, and install SGX driver afterwards."
-    },
-    {
-        SGX_ERROR_MEMORY_MAP_CONFLICT,
-        "Memory map conflicted.",
-        NULL
-    },
-    {
-        SGX_ERROR_INVALID_METADATA,
-        "Invalid enclave metadata.",
-        NULL
-    },
-    {
-        SGX_ERROR_DEVICE_BUSY,
-        "SGX device was busy.",
-        NULL
-    },
-    {
-        SGX_ERROR_INVALID_VERSION,
-        "Enclave version was invalid.",
-        NULL
-    },
-    {
-        SGX_ERROR_INVALID_ATTRIBUTE,
-        "Enclave was not authorized.",
-        NULL
-    },
-    {
-        SGX_ERROR_ENCLAVE_FILE_ACCESS,
-        "Can't open enclave file.",
-        NULL
-    },
-    {
-        SGX_ERROR_NDEBUG_ENCLAVE,
-        "The enclave is signed as product enclave, and can not be created as debuggable enclave.",
-        NULL
-    },
+	{
+		SGX_ERROR_UNEXPECTED,
+		"Unexpected error occurred.",
+		NULL
+	},
+	{
+		SGX_ERROR_INVALID_PARAMETER,
+		"Invalid parameter.",
+		NULL
+	},
+	{
+		SGX_ERROR_OUT_OF_MEMORY,
+		"Out of memory.",
+		NULL
+	},
+	{
+		SGX_ERROR_ENCLAVE_LOST,
+		"Power transition occurred.",
+		"Please refer to the sample \"PowerTransition\" for details."
+	},
+	{
+		SGX_ERROR_INVALID_ENCLAVE,
+		"Invalid enclave image.",
+		NULL
+	},
+	{
+		SGX_ERROR_INVALID_ENCLAVE_ID,
+		"Invalid enclave identification.",
+		NULL
+	},
+	{
+		SGX_ERROR_INVALID_SIGNATURE,
+		"Invalid enclave signature.",
+		NULL
+	},
+	{
+		SGX_ERROR_OUT_OF_EPC,
+		"Out of EPC memory.",
+		NULL
+	},
+	{
+		SGX_ERROR_NO_DEVICE,
+		"Invalid SGX device.",
+		"Please make sure SGX module is enabled in the BIOS, and install SGX driver afterwards."
+	},
+	{
+		SGX_ERROR_MEMORY_MAP_CONFLICT,
+		"Memory map conflicted.",
+		NULL
+	},
+	{
+		SGX_ERROR_INVALID_METADATA,
+		"Invalid enclave metadata.",
+		NULL
+	},
+	{
+		SGX_ERROR_DEVICE_BUSY,
+		"SGX device was busy.",
+		NULL
+	},
+	{
+		SGX_ERROR_INVALID_VERSION,
+		"Enclave version was invalid.",
+		NULL
+	},
+	{
+		SGX_ERROR_INVALID_ATTRIBUTE,
+		"Enclave was not authorized.",
+		NULL
+	},
+	{
+		SGX_ERROR_ENCLAVE_FILE_ACCESS,
+		"Can't open enclave file.",
+		NULL
+	},
+	{
+		SGX_ERROR_NDEBUG_ENCLAVE,
+		"The enclave is signed as product enclave, and can not be created as debuggable enclave.",
+		NULL
+	},
 };
 
 /* Check error conditions for loading enclave */
 void print_error_message(sgx_status_t ret)
 {
-    size_t idx = 0;
-    size_t ttl = sizeof sgx_errlist/sizeof sgx_errlist[0];
+	size_t idx = 0;
+	size_t ttl = sizeof sgx_errlist / sizeof sgx_errlist[0];
 
-    for (idx = 0; idx < ttl; idx++) {
-        if(ret == sgx_errlist[idx].err) {
-			if (NULL != sgx_errlist[idx].sug) {
+	for (idx = 0; idx < ttl; idx++) {
+		if (ret == sgx_errlist[idx].err) {
+			if (NULL != sgx_errlist[idx].sug)
 				printf("Info: %s\n", sgx_errlist[idx].sug);
-				unityMsg += "Info: ";
-				unityMsg += sgx_errlist[idx].sug;
-				unityMsg += "\n";
-			}
-            printf("Error: %s\n", sgx_errlist[idx].msg);
-			unityMsg += "Error: ";
-			unityMsg += sgx_errlist[idx].msg;
-			unityMsg += "\n";
-            break;
-        }
-    }
-    
-	if (idx == ttl) {
-		printf("Error code is 0x%X. Please refer to the \"Intel SGX SDK Developer Reference\" for more details.\n", ret);
-		unityMsg += "Error code is ";
-		unityMsg += "?";
-		unityMsg += ". Please refer to the \"Intel SGX SDK Developer Reference\" for more details.\n";
+			printf("Error: %s\n", sgx_errlist[idx].msg);
+			break;
+		}
 	}
+
+	if (idx == ttl)
+		printf("Error code is 0x%X. Please refer to the \"Intel SGX SDK Developer Reference\" for more details.\n", ret);
 }
 
 /* Initialize the enclave:
@@ -172,164 +159,210 @@ void print_error_message(sgx_status_t ret)
  */
 int initialize_enclave(void)
 {
-	int cnt = 100;
-    char token_path[MAX_PATH] = {'\0'};
-    sgx_launch_token_t token = {0};
-    sgx_status_t ret = SGX_ERROR_UNEXPECTED;
-    int updated = 0;
-	cnt++;
-    /* Step 1: try to retrieve the launch token saved by last transaction 
-     *         if there is no token, then create a new one.
-     */
+	char token_path[MAX_PATH] = { '\0' };
+	sgx_launch_token_t token = { 0 };
+	sgx_status_t ret = SGX_ERROR_UNEXPECTED;
+	int updated = 0;
+
+	/* Step 1: try to retrieve the launch token saved by last transaction
+	 *         if there is no token, then create a new one.
+	 */
 #ifdef _MSC_VER
-    /* try to get the token saved in CSIDL_LOCAL_APPDATA */
-    if (S_OK != SHGetFolderPathA(NULL, CSIDL_LOCAL_APPDATA, NULL, 0, token_path)) {
-        strncpy_s(token_path, _countof(token_path), TOKEN_FILENAME, sizeof(TOKEN_FILENAME));
-    } else {
-        strncat_s(token_path, _countof(token_path), "\\" TOKEN_FILENAME, sizeof(TOKEN_FILENAME)+2);
-    }
-	cnt++;
-    /* open the token file */
-    HANDLE token_handler = CreateFileA(token_path, GENERIC_READ|GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_ALWAYS, NULL, NULL);
-    if (token_handler == INVALID_HANDLE_VALUE) {
-        printf("Warning: Failed to create/open the launch token file \"%s\".\n", token_path);
-    } else {
-        /* read the token from saved file */
-        DWORD read_num = 0;
-        ReadFile(token_handler, token, sizeof(sgx_launch_token_t), &read_num, NULL);
-        if (read_num != 0 && read_num != sizeof(sgx_launch_token_t)) {
-            /* if token is invalid, clear the buffer */
-            memset(&token, 0x0, sizeof(sgx_launch_token_t));
-            printf("Warning: Invalid launch token read from \"%s\".\n", token_path);
-        }
-    }
-	cnt++;
+	 /* try to get the token saved in CSIDL_LOCAL_APPDATA */
+	if (S_OK != SHGetFolderPathA(NULL, CSIDL_LOCAL_APPDATA, NULL, 0, token_path)) {
+		strncpy_s(token_path, _countof(token_path), TOKEN_FILENAME, sizeof(TOKEN_FILENAME));
+	}
+	else {
+		strncat_s(token_path, _countof(token_path), "\\" TOKEN_FILENAME, sizeof(TOKEN_FILENAME) + 2);
+	}
+
+	/* open the token file */
+	HANDLE token_handler = CreateFileA(token_path, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_ALWAYS, NULL, NULL);
+	if (token_handler == INVALID_HANDLE_VALUE) {
+		printf("Warning: Failed to create/open the launch token file \"%s\".\n", token_path);
+	}
+	else {
+		/* read the token from saved file */
+		DWORD read_num = 0;
+		ReadFile(token_handler, token, sizeof(sgx_launch_token_t), &read_num, NULL);
+		if (read_num != 0 && read_num != sizeof(sgx_launch_token_t)) {
+			/* if token is invalid, clear the buffer */
+			memset(&token, 0x0, sizeof(sgx_launch_token_t));
+			printf("Warning: Invalid launch token read from \"%s\".\n", token_path);
+		}
+	}
 #else /* __GNUC__ */
-    /* try to get the token saved in $HOME */
-    const char *home_dir = getpwuid(getuid())->pw_dir;
-    
-    if (home_dir != NULL && 
-        (strlen(home_dir)+strlen("/")+sizeof(TOKEN_FILENAME)+1) <= MAX_PATH) {
-        /* compose the token path */
-        strncpy(token_path, home_dir, strlen(home_dir));
-        strncat(token_path, "/", strlen("/"));
-        strncat(token_path, TOKEN_FILENAME, sizeof(TOKEN_FILENAME)+1);
-    } else {
-        /* if token path is too long or $HOME is NULL */
-        strncpy(token_path, TOKEN_FILENAME, sizeof(TOKEN_FILENAME));
-    }
+	 /* try to get the token saved in $HOME */
+	const char *home_dir = getpwuid(getuid())->pw_dir;
 
-    FILE *fp = fopen(token_path, "rb");
-    if (fp == NULL && (fp = fopen(token_path, "wb")) == NULL) {
-        printf("Warning: Failed to create/open the launch token file \"%s\".\n", token_path);
-    }
+	if (home_dir != NULL &&
+		(strlen(home_dir) + strlen("/") + sizeof(TOKEN_FILENAME) + 1) <= MAX_PATH) {
+		/* compose the token path */
+		strncpy(token_path, home_dir, strlen(home_dir));
+		strncat(token_path, "/", strlen("/"));
+		strncat(token_path, TOKEN_FILENAME, sizeof(TOKEN_FILENAME) + 1);
+	}
+	else {
+		/* if token path is too long or $HOME is NULL */
+		strncpy(token_path, TOKEN_FILENAME, sizeof(TOKEN_FILENAME));
+	}
 
-    if (fp != NULL) {
-        /* read the token from saved file */
-        size_t read_num = fread(token, 1, sizeof(sgx_launch_token_t), fp);
-        if (read_num != 0 && read_num != sizeof(sgx_launch_token_t)) {
-            /* if token is invalid, clear the buffer */
-            memset(&token, 0x0, sizeof(sgx_launch_token_t));
-            printf("Warning: Invalid launch token read from \"%s\".\n", token_path);
-        }
-    }
+	FILE *fp = fopen(token_path, "rb");
+	if (fp == NULL && (fp = fopen(token_path, "wb")) == NULL) {
+		printf("Warning: Failed to create/open the launch token file \"%s\".\n", token_path);
+	}
+
+	if (fp != NULL) {
+		/* read the token from saved file */
+		size_t read_num = fread(token, 1, sizeof(sgx_launch_token_t), fp);
+		if (read_num != 0 && read_num != sizeof(sgx_launch_token_t)) {
+			/* if token is invalid, clear the buffer */
+			memset(&token, 0x0, sizeof(sgx_launch_token_t));
+			printf("Warning: Invalid launch token read from \"%s\".\n", token_path);
+		}
+	}
 #endif
-    /* Step 2: call sgx_create_enclave to initialize an enclave instance */
-    /* Debug Support: set 2nd parameter to 1 */
-    ret = sgx_create_enclave(ENCLAVE_FILENAME, SGX_DEBUG_FLAG, &token, &updated, &global_eid, NULL);
-    if (ret != SGX_SUCCESS) {
-		// NOTE: おそらくここで「Error: Can't open enclave file」となっている。ENCLAVE_FILENAMEにあるファイルをリソースに加えればいいのでは。
-        print_error_message(ret);
+	/* Step 2: call sgx_create_enclave to initialize an enclave instance */
+	/* Debug Support: set 2nd parameter to 1 */
+	ret = sgx_create_enclave(ENCLAVE_FILENAME, SGX_DEBUG_FLAG, &token, &updated, &global_eid, NULL);
+	if (ret != SGX_SUCCESS) {
+		print_error_message(ret);
 #ifdef _MSC_VER
-        if (token_handler != INVALID_HANDLE_VALUE)
-            CloseHandle(token_handler);
+		if (token_handler != INVALID_HANDLE_VALUE)
+			CloseHandle(token_handler);
 #else
-        if (fp != NULL) fclose(fp);
+		if (fp != NULL) fclose(fp);
 #endif
-        return cnt;
-    }
+		return -1;
+	}
 
-    /* Step 3: save the launch token if it is updated */
+	/* Step 3: save the launch token if it is updated */
 #ifdef _MSC_VER
-    if (updated == FALSE || token_handler == INVALID_HANDLE_VALUE) {
-        /* if the token is not updated, or file handler is invalid, do not perform saving */
-        if (token_handler != INVALID_HANDLE_VALUE)
-            CloseHandle(token_handler);
-        return 0;
-    }
-    
-    /* flush the file cache */
-    FlushFileBuffers(token_handler);
-    /* set access offset to the begin of the file */
-    SetFilePointer(token_handler, 0, NULL, FILE_BEGIN);
+	if (updated == FALSE || token_handler == INVALID_HANDLE_VALUE) {
+		/* if the token is not updated, or file handler is invalid, do not perform saving */
+		if (token_handler != INVALID_HANDLE_VALUE)
+			CloseHandle(token_handler);
+		return 0;
+	}
 
-    /* write back the token */
-    DWORD write_num = 0;
-    WriteFile(token_handler, token, sizeof(sgx_launch_token_t), &write_num, NULL);
-    if (write_num != sizeof(sgx_launch_token_t))
-        printf("Warning: Failed to save launch token to \"%s\".\n", token_path);
-    CloseHandle(token_handler);
+	/* flush the file cache */
+	FlushFileBuffers(token_handler);
+	/* set access offset to the begin of the file */
+	SetFilePointer(token_handler, 0, NULL, FILE_BEGIN);
+
+	/* write back the token */
+	DWORD write_num = 0;
+	WriteFile(token_handler, token, sizeof(sgx_launch_token_t), &write_num, NULL);
+	if (write_num != sizeof(sgx_launch_token_t))
+		printf("Warning: Failed to save launch token to \"%s\".\n", token_path);
+	CloseHandle(token_handler);
 #else /* __GNUC__ */
-    if (updated == FALSE || fp == NULL) {
-        /* if the token is not updated, or file handler is invalid, do not perform saving */
-        if (fp != NULL) fclose(fp);
-        return 0;
-    }
+	if (updated == FALSE || fp == NULL) {
+		/* if the token is not updated, or file handler is invalid, do not perform saving */
+		if (fp != NULL) fclose(fp);
+		return 0;
+	}
 
-    /* reopen the file with write capablity */
-    fp = freopen(token_path, "wb", fp);
-    if (fp == NULL) return 0;
-    size_t write_num = fwrite(token, 1, sizeof(sgx_launch_token_t), fp);
-    if (write_num != sizeof(sgx_launch_token_t))
-        printf("Warning: Failed to save launch token to \"%s\".\n", token_path);
-    fclose(fp);
+	/* reopen the file with write capablity */
+	fp = freopen(token_path, "wb", fp);
+	if (fp == NULL) return 0;
+	size_t write_num = fwrite(token, 1, sizeof(sgx_launch_token_t), fp);
+	if (write_num != sizeof(sgx_launch_token_t))
+		printf("Warning: Failed to save launch token to \"%s\".\n", token_path);
+	fclose(fp);
 #endif
-    return cnt;
+	return 0;
 }
+#pragma endregion
 
-/* OCall functions */
 void ocall_print_string(const char *str)
 {
-    /* Proxy/Bridge will check the length and null-terminate 
-     * the input string to prevent buffer overflow. 
-     */
-    printf("%s", str);
+	printf("%s", str);
 }
 
-/* Application entry */
-int SGX_CDECL main(int argc, char *argv[])
+#define BUF_SIZE 512
+
+char gbuf[BUF_SIZE];
+
+#pragma region Frey Base Funcs
+int frey_init() {
+	if (initialize_enclave() < 0) {
+		return -1;
+	}
+}
+
+void frey_finalize() {
+	sgx_destroy_enclave(global_eid);
+}
+#pragma endregion 
+
+#pragma region Write Call
+void frey_write_call(char* data) {
+	frey_init();
+	strcpy_s(gbuf, data);
+	frey_write(global_eid);
+	frey_finalize();
+}
+
+void frey_write_source_ocall(void *sc, size_t size)
 {
-    (void)(argc);
-    (void)(argv);
+	FILE* fp = fopen("C:\\Users\\sfuna\\Desktop\\test_file.cpp", "w");
+	fprintf(fp, gbuf);
+	fclose(fp);
+}
+#pragma endregion
 
-    /* Initialize the enclave */
-    if(initialize_enclave() < 0){
-        printf("Enter a character before exit ...\n");
-        getchar();
-        return -1; 
-    }
- 
-    /* Utilize edger8r attributes */
-    edger8r_array_attributes();
-    edger8r_pointer_attributes();
-    edger8r_type_attributes();
-    edger8r_function_attributes();
-    
-    /* Utilize trusted libraries */
-    ecall_libc_functions();
-    ecall_libcxx_functions();
-    ecall_thread_functions();
-
-    /* Destroy the enclave */
-    sgx_destroy_enclave(global_eid);
-    
-    printf("Info: SampleEnclave successfully returned.\n");
-
-    printf("Enter a character before exit ...\n");
-    getchar();
-    return 0;
+#pragma region Read Call
+void frey_read_call() {
+	frey_init();
+	frey_read(global_eid);
+	frey_finalize();
 }
 
+void frey_read_source_ocall(void *sc, size_t size) {
+	FILE *fp;
+	char *fname = "C:\\Users\\sfuna\\Desktop\\test_file.cpp";
+	fprintf(stderr, "%s is going to be read.\n", fname);
+
+	fopen_s(&fp, fname, "r");
+	if (fp == NULL) {
+		fprintf(stderr, "JS File open error\n");
+		exit(1);
+	}
+	char c;
+	int i = 0;
+	char *out = (char *)sc;
+	while ((c = (char)fgetc(fp)) != EOF) {
+		out[i++] = c;
+		if (i == size) {
+			printf("The file size exceeds %zu bytes.\n", size);
+			exit(1);
+		}
+	}
+	strcpy_s(gbuf, out);
+}
+#pragma endregion
+
+#pragma region Logging
+#define LOG_SIZE 1024
+
+char log[LOG_SIZE];
+
+void add_log(char* value) {
+	strcpy_s(log, value);
+}
+
+void print_log() {
+	printf("%s", log);
+}
+
+void print_gbuf_stat() {
+	printf("gbuf stat: %s\n", gbuf);
+}
+
+#pragma endregion 
+
+// test funcs
 extern "C" __declspec(dllexport) int __stdcall add(int a, int b) {
 	return a + b;
 }
@@ -380,22 +413,4 @@ extern "C" __declspec(dllexport) int __stdcall test2() {
 	printf("Enter a character before exit ...\n");
 	getchar();
 	return 0;
-}
-
-extern "C" __declspec(dllexport) char*  __stdcall getLog() {
-	char* szSampleString = new char[5096];
-	std::char_traits<char>::copy(szSampleString, unityMsg.c_str(), unityMsg.size() + 1);
-
-	ULONG ulSize = strlen(szSampleString) + sizeof(char);
-	char* pszReturn = NULL;
-
-	pszReturn = (char*)::CoTaskMemAlloc(ulSize);
-	// Copy the contents of szSampleString
-	// to the memory pointed to by pszReturn.
-	strcpy_s(pszReturn, ulSize, szSampleString);
-
-	delete[] szSampleString;
-
-	// Return pszReturn.
-	return pszReturn;
 }

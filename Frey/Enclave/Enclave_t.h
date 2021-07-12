@@ -39,6 +39,8 @@ typedef union union_foo_t {
 } union_foo_t;
 #endif
 
+void frey_write(void);
+void frey_read(void);
 void ecall_type_char(char val);
 void ecall_type_int(int val);
 void ecall_type_float(float val);
@@ -74,6 +76,8 @@ void ecall_producer(void);
 void ecall_consumer(void);
 
 sgx_status_t SGX_CDECL ocall_print_string(const char* str);
+sgx_status_t SGX_CDECL frey_write_source_ocall(void* ptr, size_t len);
+sgx_status_t SGX_CDECL frey_read_source_ocall(void* ptr, size_t len);
 sgx_status_t SGX_CDECL ocall_pointer_user_check(int* val);
 sgx_status_t SGX_CDECL ocall_pointer_in(int* val);
 sgx_status_t SGX_CDECL ocall_pointer_out(int* val);
