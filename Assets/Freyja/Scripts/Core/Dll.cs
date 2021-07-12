@@ -15,6 +15,6 @@ namespace Freyja.Core
         
         [DllImport("App", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         [return: MarshalAs(UnmanagedType.LPStr)]
-        public static extern string getLog();
+        public static extern string get_log();
     }
 }

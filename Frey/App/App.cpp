@@ -360,7 +360,28 @@ void print_gbuf_stat() {
 	printf("gbuf stat: %s\n", gbuf);
 }
 
+extern "C" __declspec(dllexport) char*  __stdcall get_log() {
+	add_log("tekitou");
+	char* szSampleString = new char[LOG_SIZE];
+	strcpy_s(szSampleString, LOG_SIZE, log);
+	
+	ULONG ulSize = strlen(szSampleString) + sizeof(char);
+	char* pszReturn = NULL;
+
+	pszReturn = (char*)::CoTaskMemAlloc(ulSize);
+	strcpy_s(pszReturn, ulSize, szSampleString);
+
+	delete[] szSampleString;
+
+	return pszReturn;
+}
 #pragma endregion 
+
+#pragma region Test Funcs
+extern "C" __declspec(dllexport) bool __stdcall is_aval() {
+	return true;
+}
+#pragma endregion
 
 // test funcs
 extern "C" __declspec(dllexport) int __stdcall add(int a, int b) {

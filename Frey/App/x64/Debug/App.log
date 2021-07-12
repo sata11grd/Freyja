@@ -1,1 +1,12 @@
-﻿  App.vcxproj -> C:\Users\sfuna\Documents\repos\Freyja\Frey\x64\Debug\App.dll
+﻿  App.cpp
+c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(309): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\stdio.h(208): note: 'fopen' の宣言を確認してください
+c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(307): warning C4100: 'size': 引数は関数の本体部で 1 度も参照されません。
+c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(307): warning C4100: 'sc': 引数は関数の本体部で 1 度も参照されません。
+c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(368): warning C4267: '初期化中': 'size_t' から 'ULONG' に変換しました。データが失われているかもしれません。
+c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(410): warning C4101: 'str': ローカル変数は 1 度も使われていません。
+c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(420): warning C4101: 'str': ローカル変数は 1 度も使われていません。
+c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(428): warning C4101: 'str': ローカル変数は 1 度も使われていません。
+c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(292): warning C4715: 'frey_init': 値を返さないコントロール パスがあります。
+     
+  App.vcxproj -> C:\Users\sfuna\Documents\repos\Freyja\Frey\x64\Debug\App.dll
