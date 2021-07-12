@@ -314,6 +314,12 @@ void add_log(char* value) {
 	strcat_s(log, value);
 }
 
+void add_gbuf_stat_to_log() {
+	add_log("gbuf stat: (START)");
+	add_log(gbuf);
+	add_log("(END)\n");
+}
+
 void print_log() {
 	printf("%s", log);
 }
@@ -400,9 +406,17 @@ extern "C" __declspec(dllexport) bool __stdcall is_aval_test() {
 
 extern "C" __declspec(dllexport) char* __stdcall frey_read_call_test() {
 	add_log("called func: frey_read_call_test\n");
+	add_gbuf_stat_to_log();
 	frey_read_call();
+	add_gbuf_stat_to_log();
 	return str_export(log, LOG_SIZE);
 }
 
-
+extern "C" __declspec(dllexport) char* __stdcall frey_write_call_test(char* data) {
+	add_log("called func: frey_write_call_test (args: ");
+	add_log(data);
+	add_log(")\n");
+	frey_write_call(data);
+	return str_export(log, LOG_SIZE);
+}
 #pragma endregion
