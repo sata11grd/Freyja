@@ -3,12 +3,4 @@ c:\users\sfuna\documents\repos\freyja\freyja\app\app.cpp(356): warning C4101: 's
 c:\users\sfuna\documents\repos\freyja\freyja\app\app.cpp(366): warning C4101: 'str': ローカル変数は 1 度も使われていません。
 c:\users\sfuna\documents\repos\freyja\freyja\app\app.cpp(374): warning C4101: 'str': ローカル変数は 1 度も使われていません。
 c:\users\sfuna\documents\repos\freyja\freyja\app\app.cpp(389): warning C4267: '初期化中': 'size_t' から 'ULONG' に変換しました。データが失われているかもしれません。
-  Arrays.cpp
-  Functions.cpp
-  Pointers.cpp
-  Types.cpp
-  Libc.cpp
-  Libcxx.cpp
-  Thread.cpp
-  コードを生成中...
   App.vcxproj -> C:\Users\sfuna\Documents\repos\Freyja\freyja\x64\Debug\App.dll
