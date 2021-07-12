@@ -39,7 +39,7 @@
 #include "App.h"
 #include "Enclave_u.h"
 
-#pragma region Enclave Funcs
+#pragma region SGX Base Funcs
  /* Global EID shared by multiple threads */
 sgx_enclave_id_t global_eid = 0;
 
@@ -273,25 +273,66 @@ int initialize_enclave(void)
 #endif
 	return 0;
 }
-#pragma endregion
 
 void ocall_print_string(const char *str)
 {
 	printf("%s", str);
 }
+#pragma endregion
+
+#pragma region Dll Management
+char* str_export(char* str, int size) {
+	char* szSampleString = new char[size];
+	strcpy_s(szSampleString, size, str);
+
+	ULONG ulSize = strlen(szSampleString) + sizeof(char);
+	char* pszReturn = NULL;
+
+	pszReturn = (char*)::CoTaskMemAlloc(ulSize);
+	strcpy_s(pszReturn, ulSize, szSampleString);
+
+	delete[] szSampleString;
+
+	return pszReturn;
+}
+#pragma endregion
 
 #define BUF_SIZE 512
-
 char gbuf[BUF_SIZE];
+
+#pragma region Logging
+#define LOG_SIZE 1024
+
+char log[LOG_SIZE];
+
+void add_log(char* value) {
+	strcpy_s(log, value);
+}
+
+void print_log() {
+	printf("%s", log);
+}
+
+void print_gbuf_stat() {
+	printf("gbuf stat: %s\n", gbuf);
+}
+
+extern "C" __declspec(dllexport) char*  __stdcall get_log() {
+	add_log("called func: get_log\n");
+	return str_export(log, LOG_SIZE);
+}
+#pragma endregion 
 
 #pragma region Frey Base Funcs
 int frey_init() {
+	add_log("called func: frey_init\n");
 	if (initialize_enclave() < 0) {
 		return -1;
 	}
 }
 
 void frey_finalize() {
+	add_log("called func: frey_finalize\n");
 	sgx_destroy_enclave(global_eid);
 }
 #pragma endregion 
@@ -304,8 +345,7 @@ void frey_write_call(char* data) {
 	frey_finalize();
 }
 
-void frey_write_source_ocall(void *sc, size_t size)
-{
+void frey_write_source_ocall(void *sc, size_t size){
 	FILE* fp = fopen("C:\\Users\\sfuna\\Desktop\\test_file.cpp", "w");
 	fprintf(fp, gbuf);
 	fclose(fp);
@@ -343,95 +383,8 @@ void frey_read_source_ocall(void *sc, size_t size) {
 }
 #pragma endregion
 
-#pragma region Logging
-#define LOG_SIZE 1024
-
-char log[LOG_SIZE];
-
-void add_log(char* value) {
-	strcpy_s(log, value);
-}
-
-void print_log() {
-	printf("%s", log);
-}
-
-void print_gbuf_stat() {
-	printf("gbuf stat: %s\n", gbuf);
-}
-
-extern "C" __declspec(dllexport) char*  __stdcall get_log() {
-	add_log("tekitou");
-	char* szSampleString = new char[LOG_SIZE];
-	strcpy_s(szSampleString, LOG_SIZE, log);
-	
-	ULONG ulSize = strlen(szSampleString) + sizeof(char);
-	char* pszReturn = NULL;
-
-	pszReturn = (char*)::CoTaskMemAlloc(ulSize);
-	strcpy_s(pszReturn, ulSize, szSampleString);
-
-	delete[] szSampleString;
-
-	return pszReturn;
-}
-#pragma endregion 
-
-#pragma region Test Funcs
-extern "C" __declspec(dllexport) bool __stdcall is_aval() {
+#pragma region Tests
+extern "C" __declspec(dllexport) bool __stdcall is_aval_test() {
 	return true;
 }
 #pragma endregion
-
-// test funcs
-extern "C" __declspec(dllexport) int __stdcall add(int a, int b) {
-	return a + b;
-}
-
-extern "C" __declspec(dllexport) int __stdcall test() {
-	return initialize_enclave();
-}
-
-extern "C" __declspec(dllexport) int __stdcall test2() {
-	// Initialize the enclave
-	if (initialize_enclave() < 0) {
-		printf("Enter a character before exit ...\n");
-		getchar();
-		return -1;
-	}
-
-	try {
-		// Utilize edger8r attributes
-		edger8r_array_attributes();
-		edger8r_pointer_attributes();
-		edger8r_type_attributes();
-		edger8r_function_attributes();
-	}
-	catch (char *str) {
-		return 10;
-	}
-
-	try {
-		// Utilize trusted libraries
-		ecall_libc_functions();
-		ecall_libcxx_functions();
-		ecall_thread_functions();
-	}
-	catch (char *str) {
-		return 11;
-	}
-
-	try {
-		// Destroy the enclave
-		sgx_destroy_enclave(global_eid);
-	}
-	catch (char *str) {
-		return 12;
-	}
-
-	printf("Info: SampleEnclave successfully returned.\n");
-
-	printf("Enter a character before exit ...\n");
-	getchar();
-	return 0;
-}
