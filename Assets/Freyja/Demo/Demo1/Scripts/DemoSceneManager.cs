@@ -10,9 +10,7 @@ namespace Freyja.Demo.Demo1
     {
         public void Test()
         {
-            Debug.Log(Dll.add(-5, 3));
-            Debug.Log(Dll.test());
-            Debug.Log(Dll.get_log());
+            Debug.Log(Dll.frey_read_call_test());
         }
     }
 }

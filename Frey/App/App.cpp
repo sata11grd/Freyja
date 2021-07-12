@@ -304,9 +304,14 @@ char gbuf[BUF_SIZE];
 #define LOG_SIZE 1024
 
 char log[LOG_SIZE];
+bool log_is_initialized = false;
 
 void add_log(char* value) {
-	strcpy_s(log, value);
+	if (!log_is_initialized) {
+		strcpy_s(log, "[FREY EXECUTION LOG]\n");
+		log_is_initialized = true;
+	}
+	strcat_s(log, value);
 }
 
 void print_log() {
@@ -338,7 +343,8 @@ void frey_finalize() {
 #pragma endregion 
 
 #pragma region Write Call
-void frey_write_call(char* data) {
+extern "C" __declspec(dllexport) void __stdcall frey_write_call(char* data) {
+	add_log("called func: frey_write_call\n");
 	frey_init();
 	strcpy_s(gbuf, data);
 	frey_write(global_eid);
@@ -346,6 +352,7 @@ void frey_write_call(char* data) {
 }
 
 void frey_write_source_ocall(void *sc, size_t size){
+	add_log("called func: frey_write_source_ocall\n");
 	FILE* fp = fopen("C:\\Users\\sfuna\\Desktop\\test_file.cpp", "w");
 	fprintf(fp, gbuf);
 	fclose(fp);
@@ -353,13 +360,15 @@ void frey_write_source_ocall(void *sc, size_t size){
 #pragma endregion
 
 #pragma region Read Call
-void frey_read_call() {
+extern "C" __declspec(dllexport) void __stdcall frey_read_call() {
+	add_log("called func: frey_read_call\n");
 	frey_init();
 	frey_read(global_eid);
 	frey_finalize();
 }
 
 void frey_read_source_ocall(void *sc, size_t size) {
+	add_log("called func: frey_read_source_ocall\n");
 	FILE *fp;
 	char *fname = "C:\\Users\\sfuna\\Desktop\\test_file.cpp";
 	fprintf(stderr, "%s is going to be read.\n", fname);
@@ -385,6 +394,15 @@ void frey_read_source_ocall(void *sc, size_t size) {
 
 #pragma region Tests
 extern "C" __declspec(dllexport) bool __stdcall is_aval_test() {
+	add_log("called func: is_aval_test\n");
 	return true;
 }
+
+extern "C" __declspec(dllexport) char* __stdcall frey_read_call_test() {
+	add_log("called func: frey_read_call_test\n");
+	frey_read_call();
+	return str_export(log, LOG_SIZE);
+}
+
+
 #pragma endregion

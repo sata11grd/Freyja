@@ -7,14 +7,16 @@ namespace Freyja.Core
 {
     public static class Dll
     {
+        /*
         [DllImport("App", CallingConvention = CallingConvention.StdCall)]
         public static extern int add(int a, int b);
 
         [DllImport("App", CallingConvention = CallingConvention.Cdecl)]
         public static extern int test();
+        */
         
         [DllImport("App", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         [return: MarshalAs(UnmanagedType.LPStr)]
-        public static extern string get_log();
+        public static extern string frey_read_call_test();
     }
 }

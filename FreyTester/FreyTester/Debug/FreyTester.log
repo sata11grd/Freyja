@@ -1,0 +1,3 @@
+﻿FreyTester.obj : error LNK2019: 未解決の外部シンボル __imp__is_valid_test@0 が関数 _main で参照されました。
+App.lib : warning LNK4272: ライブラリのコンピューターの種類 'x64' がターゲットのコンピューターの種類' x86' と競合しています
+C:\Users\sfuna\Documents\repos\Freyja\FreyTester\Debug\FreyTester.exe : fatal error LNK1120: 1 件の未解決の外部参照
