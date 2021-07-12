@@ -1,3 +1,0 @@
-﻿  freyjaTester.cpp
-freyjaTester.obj : error LNK2019: 未解決の外部シンボル __imp__add@8 が関数 _main で参照されました。
-C:\Users\sfuna\Documents\repos\Freyja\freyjaTester\Debug\freyjaTester.exe : fatal error LNK1120: 1 件の未解決の外部参照
