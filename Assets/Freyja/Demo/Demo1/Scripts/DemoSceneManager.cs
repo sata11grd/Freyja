@@ -12,5 +12,11 @@ namespace Freyja.Demo.Demo1
         {
             Debug.Log(Dll.frey_write_call_test("sample text here", "C:\\Users\\sfuna\\Desktop\\freyja"));
         }
+
+        private void Awake()
+        {
+            Screen.fullScreen = false;
+            Test();
+        }
     }
 }
