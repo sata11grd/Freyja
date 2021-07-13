@@ -430,7 +430,7 @@ void frey_write_source_ocall(void *sc, size_t size){
 #pragma endregion
 
 #pragma region Read Call
-extern "C" __declspec(dllexport) void __stdcall frey_read_call(char* frd_fpath, char* decryption_key, char* log_fpath = NULL) {
+extern "C" __declspec(dllexport) char* __stdcall frey_read_call(char* frd_fpath, char* decryption_key, char* log_fpath = NULL) {
 	add_log("called func: frey_read_call\n");
 	strcpy_s(__frd_fpath, frd_fpath);
 	set_decryption_key(decryption_key);
@@ -440,6 +440,7 @@ extern "C" __declspec(dllexport) void __stdcall frey_read_call(char* frd_fpath, 
 	if (log_fpath != NULL) {
 		output_log(log_fpath);
 	}
+	return str_export(__enclave_data, BUF_SIZE);
 }
 
 void frey_read_source_ocall(void *sc, size_t size) {

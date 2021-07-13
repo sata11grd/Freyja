@@ -15,39 +15,28 @@ namespace Freyja.Demo.Demo1
         [SerializeField] private Slider mpSlider;
         [SerializeField] private Button writeCallButton;
         [SerializeField] private Button readCallButton;
+
+        private const string FrdFilePath = "C:\\Users\\sfuna\\Desktop\\.frd";
+        private const string LogFilePath = "C:\\Users\\sfuna\\Desktop\\frey.log";
         
         public void Test()
         {
-            SecureInt tp = 15;
-            Debug.Log((int)tp);
-
-            var a = tp + 5;
-            Debug.Log(a);
-
-            return;
-            Debug.Log(Dll.frey_write_call_test("sample text here", "C:\\Users\\sfuna\\Desktop\\freyja"));
-
-            SecureInt hp;
-            hp = 5;
-
-            var mp = new SecureInt(3);
-            if (mp < 3)
-            {
-                
-            }
-            
+            Freyja.WriteCall("test", FrdFilePath, "sv7F", LogFilePath);
+            var value = Freyja.ReadCall(FrdFilePath, "sv7F", LogFilePath);
+            Debug.Log(value);
         }
 
         private void Awake()
         {
             writeCallButton.onClick.AddListener(() =>
             {
-                Freyja.WriteCall("test");
+                Freyja.WriteCall("test", FrdFilePath, "sv7F", LogFilePath);
             });
             
             readCallButton.onClick.AddListener(() =>
             {
-                Freyja.ReadCall();
+                var value = Freyja.ReadCall(FrdFilePath, "sv7F", LogFilePath);
+                Debug.Log(value);
             });
         }
     }
