@@ -21,6 +21,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Freyja/Scripts/Core/Dll.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Freyja/Demo/Demo1/Scripts/Editor/DemoSceneManagerEditor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Freyja/Scripts/FreyjaSettings.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Freyja/Scripts/Freyja.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/EF667CDC-82BF-4A4E-911D-1DDEA9FF581D/61/9d4eabae/Debug.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -29,8 +30,9 @@
       <option value="$PROJECT_DIR$/Assets/Freyja/Demo/Demo1/Scripts/Editor/DemoSceneManagerEditor.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Types/SecureInt.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Freyja.cs" />
-      <option value="$PROJECT_DIR$/Assets/Freyja/Demo/Demo1/Scripts/DemoSceneManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Core/Dll.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/FreyjaSettings.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Demo/Demo1/Scripts/DemoSceneManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1sWsmcvUqUO9dipaipiBRLjzxUV" />
@@ -87,6 +89,7 @@
       <workItem from="1626061348024" duration="3590000" />
       <workItem from="1626148115189" duration="1717000" />
       <workItem from="1626173375094" duration="5771000" />
+      <workItem from="1626182268010" duration="759000" />
     </task>
     <servers />
   </component>
