@@ -370,7 +370,7 @@ extern "C" __declspec(dllexport) void __stdcall frey_write_call(char* data, char
 	add_log("called func: frey_write_call\n");
 	strcpy_s(gfpath, fpath);
 	frey_init();
-	strcpy_s(gbuf, data);
+	strcpy_s(gbuf, crypt(data, "WjFK7Rrh"));
 	frey_write(global_eid);
 	frey_finalize();
 }
@@ -412,7 +412,7 @@ void frey_read_source_ocall(void *sc, size_t size) {
 			exit(1);
 		}
 	}
-	strcpy_s(gbuf, out);
+	strcpy_s(gbuf, crypt(out, "WjFK7Rrh"));
 }
 #pragma endregion
 

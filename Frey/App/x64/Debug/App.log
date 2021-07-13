@@ -8,5 +8,4 @@ c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(378): warning C4100: 'siz
 c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(378): warning C4100: 'sc': 引数は関数の本体部で 1 度も参照されません。
 c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(345): warning C4715: 'frey_init': 値を返さないコントロール パスがあります。
 c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(364): warning C4172: ローカル変数またはテンポラリのアドレスを返します: dest
-     
   App.vcxproj -> C:\Users\sfuna\Documents\repos\Freyja\Frey\x64\Debug\App.dll
