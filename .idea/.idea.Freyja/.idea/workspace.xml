@@ -13,11 +13,15 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Freyja/Scripts/Core/Dll.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Freyja/Demo/Demo1/Scripts/Editor/DemoSceneManagerEditor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Freyja/Scripts/Freyja.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/EF667CDC-82BF-4A4E-911D-1DDEA9FF581D/61/9d4eabae/Debug.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/Assets/Freyja/Demo/Demo1/Scripts/Editor/DemoSceneManagerEditor.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Core/Dll.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Types/SecureInt.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Freyja.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Demo/Demo1/Scripts/DemoSceneManager.cs" />
     </changedPaths>
   </component>
@@ -32,7 +36,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="CodeLensConfigurable" />
+    <property name="settings.editor.selected.configurable" value="InlayHintsGeneralOptionsPageId" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
@@ -74,6 +78,7 @@
       <workItem from="1623059391652" duration="526000" />
       <workItem from="1626061348024" duration="3590000" />
       <workItem from="1626148115189" duration="1717000" />
+      <workItem from="1626173375094" duration="3547000" />
     </task>
     <servers />
   </component>
