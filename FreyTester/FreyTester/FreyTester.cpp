@@ -5,13 +5,16 @@
 #include <Windows.h>
 #include <tchar.h>
 
-extern "C" __declspec(dllimport) bool __stdcall is_aval_test();
+extern "C" __declspec(dllimport) char* __stdcall frey_write_call_test(char*, char*);
 
 #define LOG_SIZE 1024
 
 int main()
 {
-	std::cout << is_aval_test() << std::endl;
+	char data[] = "test";
+	char fpath[] = "C:\\Users\\sfuna\\Desktop\\frey.edf";
+
+	std::cout << frey_write_call_test(data, fpath) << std::endl;
 
 	return 0;
 }

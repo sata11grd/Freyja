@@ -17,10 +17,10 @@ namespace Freyja.Core
         
         [DllImport("App", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         [return: MarshalAs(UnmanagedType.LPStr)]
-        public static extern string frey_read_call_test();
+        public static extern string frey_read_call_test(string fpath);
         
         [DllImport("App", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         [return: MarshalAs(UnmanagedType.LPStr)]
-        public static extern string frey_write_call_test(string data);
+        public static extern string frey_write_call_test(string data, string fpath);
     }
 }

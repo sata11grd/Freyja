@@ -298,7 +298,9 @@ char* str_export(char* str, int size) {
 #pragma endregion
 
 #define BUF_SIZE 512
+
 char gbuf[BUF_SIZE];
+char gfpath[256];
 
 #pragma region Logging
 #define LOG_SIZE 1024
@@ -349,8 +351,9 @@ void frey_finalize() {
 #pragma endregion 
 
 #pragma region Write Call
-extern "C" __declspec(dllexport) void __stdcall frey_write_call(char* data) {
+extern "C" __declspec(dllexport) void __stdcall frey_write_call(char* data, char* fpath) {
 	add_log("called func: frey_write_call\n");
+	strcpy_s(gfpath, fpath);
 	frey_init();
 	strcpy_s(gbuf, data);
 	frey_write(global_eid);
@@ -359,15 +362,16 @@ extern "C" __declspec(dllexport) void __stdcall frey_write_call(char* data) {
 
 void frey_write_source_ocall(void *sc, size_t size){
 	add_log("called func: frey_write_source_ocall\n");
-	FILE* fp = fopen("C:\\Users\\sfuna\\Desktop\\test_file.cpp", "w");
+	FILE* fp = fopen(gfpath, "w");
 	fprintf(fp, gbuf);
 	fclose(fp);
 }
 #pragma endregion
 
 #pragma region Read Call
-extern "C" __declspec(dllexport) void __stdcall frey_read_call() {
+extern "C" __declspec(dllexport) void __stdcall frey_read_call(char* fpath) {
 	add_log("called func: frey_read_call\n");
+	strcpy_s(gfpath, fpath);
 	frey_init();
 	frey_read(global_eid);
 	frey_finalize();
@@ -376,10 +380,9 @@ extern "C" __declspec(dllexport) void __stdcall frey_read_call() {
 void frey_read_source_ocall(void *sc, size_t size) {
 	add_log("called func: frey_read_source_ocall\n");
 	FILE *fp;
-	char *fname = "C:\\Users\\sfuna\\Desktop\\test_file.cpp";
-	fprintf(stderr, "%s is going to be read.\n", fname);
+	fprintf(stderr, "%s is going to be read.\n", gfpath);
 
-	fopen_s(&fp, fname, "r");
+	fopen_s(&fp, gfpath, "r");
 	if (fp == NULL) {
 		fprintf(stderr, "JS File open error\n");
 		exit(1);
@@ -404,19 +407,19 @@ extern "C" __declspec(dllexport) bool __stdcall is_aval_test() {
 	return true;
 }
 
-extern "C" __declspec(dllexport) char* __stdcall frey_read_call_test() {
+extern "C" __declspec(dllexport) char* __stdcall frey_read_call_test(char* fpath) {
 	add_log("called func: frey_read_call_test\n");
 	add_gbuf_stat_to_log();
-	frey_read_call();
+	frey_read_call(fpath);
 	add_gbuf_stat_to_log();
 	return str_export(log, LOG_SIZE);
 }
 
-extern "C" __declspec(dllexport) char* __stdcall frey_write_call_test(char* data) {
+extern "C" __declspec(dllexport) char* __stdcall frey_write_call_test(char* data, char* fpath) {
 	add_log("called func: frey_write_call_test (args: ");
 	add_log(data);
 	add_log(")\n");
-	frey_write_call(data);
+	frey_write_call(data, fpath);
 	return str_export(log, LOG_SIZE);
 }
 #pragma endregion

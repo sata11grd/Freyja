@@ -10,7 +10,7 @@ namespace Freyja.Demo.Demo1
     {
         public void Test()
         {
-            Debug.Log(Dll.frey_write_call_test("input data for test."));
+            Debug.Log(Dll.frey_write_call_test("sample text here", "C:\\Users\\sfuna\\Desktop\\freyja"));
         }
     }
 }
