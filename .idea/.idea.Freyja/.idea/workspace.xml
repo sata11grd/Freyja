@@ -28,9 +28,9 @@
     <changedPaths>
       <option value="$PROJECT_DIR$/Assets/Freyja/Demo/Demo1/Scripts/Editor/DemoSceneManagerEditor.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Types/SecureInt.cs" />
-      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Core/Dll.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Freyja.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Demo/Demo1/Scripts/DemoSceneManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Core/Dll.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1sWsmcvUqUO9dipaipiBRLjzxUV" />
@@ -86,7 +86,7 @@
       <workItem from="1623059391652" duration="526000" />
       <workItem from="1626061348024" duration="3590000" />
       <workItem from="1626148115189" duration="1717000" />
-      <workItem from="1626173375094" duration="4675000" />
+      <workItem from="1626173375094" duration="5771000" />
     </task>
     <servers />
   </component>
