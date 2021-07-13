@@ -10,9 +10,13 @@ namespace Freyja.Demo.Demo1
     {
         public void Test()
         {
-            Debug.Log(Dll.add(-5, 3));
-            Debug.Log(Dll.test());
-            Debug.Log(Dll.getLog());
+            Debug.Log(Dll.frey_write_call_test("sample text here", "C:\\Users\\sfuna\\Desktop\\freyja"));
+        }
+
+        private void Awake()
+        {
+            Screen.fullScreen = false;
+            Test();
         }
     }
 }
