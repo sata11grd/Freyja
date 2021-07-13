@@ -350,6 +350,21 @@ void frey_finalize() {
 }
 #pragma endregion 
 
+#pragma region Encryption
+char* crypt(char *src, char *key) {
+	int src_len = strlen(src);
+	int key_len = strlen(key);
+	int key_pos = 0, i;
+	char dest[BUF_SIZE];
+	strcpy_s(dest, src);
+	for (i = 0; i < src_len; i++, key_pos++) {
+		if (key_pos > key_len) key_pos = 0;
+		dest[i] = src[i] ^ key[key_pos];
+	}
+	return dest;
+}
+#pragma endregion
+
 #pragma region Write Call
 extern "C" __declspec(dllexport) void __stdcall frey_write_call(char* data, char* fpath) {
 	add_log("called func: frey_write_call\n");
@@ -421,5 +436,15 @@ extern "C" __declspec(dllexport) char* __stdcall frey_write_call_test(char* data
 	add_log(")\n");
 	frey_write_call(data, fpath);
 	return str_export(log, LOG_SIZE);
+}
+
+extern "C" __declspec(dllexport) char* __stdcall encrypt_test(char* value, char* key) {
+	add_log("called func: encrypt_test\n");
+	return crypt(value, key);
+}
+
+extern "C" __declspec(dllexport) char* __stdcall decrypt_test(char* value, char* key) {
+	add_log("called func: decrypt_test\n");
+	return crypt(value, key);
 }
 #pragma endregion
