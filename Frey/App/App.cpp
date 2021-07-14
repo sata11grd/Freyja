@@ -303,7 +303,7 @@ char __enclave_data[DATA_SIZE];
 char __frd_fpath[256];
 
 #pragma region Logging
-#define LOG_SIZE 5096
+#define LOG_SIZE 256 * 256
 
 char __log[LOG_SIZE];
 bool __log_is_initialized = false;
@@ -314,6 +314,16 @@ void add_log(char* value) {
 		__log_is_initialized = true;
 	}
 	strcat_s(__log, value);
+}
+
+void add_log(char value) {
+	for (int i = 0; i < LOG_SIZE - 1; ++i) {
+		if (__log[i] == '\0') {
+			__log[i] = value;
+			__log[i + 1] = '\0';
+			return;
+		}
+	}
 }
 
 void add_log_line(char* prefix, char* content, char* suffix) {
@@ -369,7 +379,6 @@ int frey_init() {
 void frey_finalize() {
 	add_log("called func: frey_finalize\n");
 	sgx_destroy_enclave(global_eid);
-	add_log("[FREY LOG END]\n");
 }
 #pragma endregion 
 
@@ -380,10 +389,14 @@ char __encryption_key_store[KEY_SIZE];
 char __decryption_key_store[KEY_SIZE];
 
 void set_encryption_key(char* key) {
+	add_log("called func: set_encryption_key\n");
+	add_log_line("(-arg1: key) ", key, " : char*");
 	strcpy_s(__encryption_key_store, key);
 }
 
 void set_decryption_key(char* key) {
+	add_log("called func: set_decryption_key\n");
+	add_log_line("(-arg1: key) ", key, " : char*");
 	strcpy_s(__decryption_key_store, key);
 }
 
@@ -396,8 +409,17 @@ char* encrypt(char *src) {
 	char dest[DATA_SIZE];
 	strcpy_s(dest, src);
 	for (i = 0; i < src_len; i++, key_pos++) {
+		add_log("\t[ENCRYPTING...] ");
+		add_log(dest);
 		if (key_pos > key_len) key_pos = 0;
 		dest[i] = src[i] ^ __encryption_key_store[key_pos];
+		add_log(" (");
+		add_log(src[i]);
+		add_log(" -> ");
+		add_log(dest[i]);
+		add_log(" by ");
+		add_log(__encryption_key_store[key_pos]);
+		add_log(")\n");
 	}
 	add_log_star_line();
 	add_log_line("# origin data:\n", src, "");
@@ -416,8 +438,17 @@ char* decrypt(char *src) {
 	char dest[DATA_SIZE];
 	strcpy_s(dest, src);
 	for (i = 0; i < src_len; i++, key_pos++) {
+		add_log("\t[DECRYPTING...] ");
+		add_log(dest);
 		if (key_pos > key_len) key_pos = 0;
 		dest[i] = src[i] ^ __decryption_key_store[key_pos];
+		add_log(" (");
+		add_log(src[i]);
+		add_log(" -> ");
+		add_log(dest[i]);
+		add_log(" by ");
+		add_log(__decryption_key_store[key_pos]);
+		add_log(")\n");
 	}
 	add_log_star_line();
 	add_log_line("# origin data:\n", src, "");
