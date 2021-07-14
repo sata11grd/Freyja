@@ -1,24 +1,13 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: 中間ディレクトリ (x64\Debug\) に別のプロジェクト (App.vcxproj) と共有されているファイルが含まれています。これにより、クリーンしてリビルド動作が適切に行われない可能性があります。
-  Creating untrusted proxy/bridge routines
   App.cpp
 c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(288): warning C4267: '初期化中': 'size_t' から 'ULONG' に変換しました。データが失われているかもしれません。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(379): warning C4267: '初期化中': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(380): warning C4267: '初期化中': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(392): warning C4267: '初期化中': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
 c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(393): warning C4267: '初期化中': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(419): warning C4100: 'size': 引数は関数の本体部で 1 度も参照されません。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(419): warning C4100: 'sc': 引数は関数の本体部で 1 度も参照されません。
-  Arrays.cpp
-  Functions.cpp
-  Pointers.cpp
-  Types.cpp
-  Libc.cpp
-  Libcxx.cpp
-  Thread.cpp
-  コードを生成中...
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(356): warning C4715: 'frey_init': 値を返さないコントロール パスがあります。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(388): warning C4172: ローカル変数またはテンポラリのアドレスを返します: dest
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(401): warning C4172: ローカル変数またはテンポラリのアドレスを返します: dest
-  Enclave_u.c
-     ライブラリ C:\Users\sfuna\Documents\repos\Freyja\Frey\x64\Debug\FreyApp.lib とオブジェクト C:\Users\sfuna\Documents\repos\Freyja\Frey\x64\Debug\FreyApp.exp を作成中
+c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(394): warning C4267: '初期化中': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(413): warning C4267: '初期化中': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(414): warning C4267: '初期化中': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(457): warning C4100: 'size': 引数は関数の本体部で 1 度も参照されません。
+c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(457): warning C4100: 'sc': 引数は関数の本体部で 1 度も参照されません。
+c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(367): warning C4715: 'frey_init': 値を返さないコントロール パスがあります。
+c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(407): warning C4172: ローカル変数またはテンポラリのアドレスを返します: dest
+c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(427): warning C4172: ローカル変数またはテンポラリのアドレスを返します: dest
   App.vcxproj -> C:\Users\sfuna\Documents\repos\Freyja\Frey\x64\Debug\FreyApp.dll

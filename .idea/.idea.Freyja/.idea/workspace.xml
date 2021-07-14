@@ -29,10 +29,10 @@
     <changedPaths>
       <option value="$PROJECT_DIR$/Assets/Freyja/Demo/Demo1/Scripts/Editor/DemoSceneManagerEditor.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Types/SecureInt.cs" />
-      <option value="$PROJECT_DIR$/Assets/Freyja/Demo/Demo1/Scripts/DemoSceneManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Freyja.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Core/Dll.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/FreyjaSettings.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Freyja.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Demo/Demo1/Scripts/DemoSceneManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1sWsmcvUqUO9dipaipiBRLjzxUV" />
@@ -90,7 +90,7 @@
       <workItem from="1626148115189" duration="1717000" />
       <workItem from="1626173375094" duration="5771000" />
       <workItem from="1626182268010" duration="759000" />
-      <workItem from="1626232113800" duration="478000" />
+      <workItem from="1626232113800" duration="3843000" />
     </task>
     <servers />
   </component>

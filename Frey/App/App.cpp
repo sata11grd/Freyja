@@ -297,13 +297,13 @@ char* str_export(char* str, int size) {
 }
 #pragma endregion
 
-#define BUF_SIZE 512
+#define DATA_SIZE 5096
 
-char __enclave_data[BUF_SIZE];
+char __enclave_data[DATA_SIZE];
 char __frd_fpath[256];
 
 #pragma region Logging
-#define LOG_SIZE 1024
+#define LOG_SIZE 5096
 
 char __log[LOG_SIZE];
 bool __log_is_initialized = false;
@@ -314,6 +314,17 @@ void add_log(char* value) {
 		__log_is_initialized = true;
 	}
 	strcat_s(__log, value);
+}
+
+void add_log_line(char* prefix, char* content, char* suffix) {
+	strcat_s(__log, prefix);
+	strcat_s(__log, content);
+	strcat_s(__log, suffix);
+	strcat_s(__log, "\n");
+}
+
+void add_log_star_line() {
+	strcat_s(__log, "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
 }
 
 void add_gbuf_stat_to_log() {
@@ -358,6 +369,7 @@ int frey_init() {
 void frey_finalize() {
 	add_log("called func: frey_finalize\n");
 	sgx_destroy_enclave(global_eid);
+	add_log("[FREY LOG END]\n");
 }
 #pragma endregion 
 
@@ -376,28 +388,42 @@ void set_decryption_key(char* key) {
 }
 
 char* encrypt(char *src) {
+	add_log("called func: encrypt\n");
+	add_log_line("(-arg1: src) ", src, " : char*");
 	int src_len = strlen(src);
 	int key_len = strlen(__encryption_key_store);
 	int key_pos = 0, i;
-	char dest[BUF_SIZE];
+	char dest[DATA_SIZE];
 	strcpy_s(dest, src);
 	for (i = 0; i < src_len; i++, key_pos++) {
 		if (key_pos > key_len) key_pos = 0;
 		dest[i] = src[i] ^ __encryption_key_store[key_pos];
 	}
+	add_log_star_line();
+	add_log_line("# origin data:\n", src, "");
+	add_log_star_line();
+	add_log_line("# encrypted data:\n", dest, "");
+	add_log_star_line();
 	return dest;
 }
 
 char* decrypt(char *src) {
+	add_log("called func: decrypt\n");
+	add_log_line("(-arg1: src) ", src, " : char*");
 	int src_len = strlen(src);
 	int key_len = strlen(__decryption_key_store);
 	int key_pos = 0, i;
-	char dest[BUF_SIZE];
+	char dest[DATA_SIZE];
 	strcpy_s(dest, src);
 	for (i = 0; i < src_len; i++, key_pos++) {
 		if (key_pos > key_len) key_pos = 0;
 		dest[i] = src[i] ^ __decryption_key_store[key_pos];
 	}
+	add_log_star_line();
+	add_log_line("# origin data:\n", src, "");
+	add_log_star_line();
+	add_log_line("# decrypted data:\n", dest, "");
+	add_log_star_line();
 	return dest;
 }
 #pragma endregion
@@ -405,6 +431,18 @@ char* decrypt(char *src) {
 #pragma region Write Call
 extern "C" __declspec(dllexport) void __stdcall frey_write_call(char* data, char* frd_fpath, char* encryption_key, char* log_fpath = NULL) {
 	add_log("called func: frey_write_call\n");
+	add_log("(-arg1: data) ");
+	add_log(data);
+	add_log(" : char*\n");
+	add_log("(-arg2: frd_fpath) ");
+	add_log(frd_fpath);
+	add_log(" : char*\n");
+	add_log("(-arg3: encryption_key) ");
+	add_log(encryption_key);
+	add_log(" : char*\n");
+	add_log("(-arg4: log_fpath) ");
+	add_log(log_fpath);
+	add_log(" : char*\n");
 	strcpy_s(__frd_fpath, frd_fpath);
 	set_encryption_key(encryption_key);
 	frey_init();
@@ -432,6 +470,15 @@ void frey_write_source_ocall(void *sc, size_t size){
 #pragma region Read Call
 extern "C" __declspec(dllexport) char* __stdcall frey_read_call(char* frd_fpath, char* decryption_key, char* log_fpath = NULL) {
 	add_log("called func: frey_read_call\n");
+	add_log("(-arg1: frd_fpath) ");
+	add_log(frd_fpath);
+	add_log(" : char*\n");
+	add_log("(-arg2: decryption_key) ");
+	add_log(decryption_key);
+	add_log(" : char*\n");
+	add_log("(-arg3: log_fpath) ");
+	add_log(log_fpath);
+	add_log(" : char*\n");
 	strcpy_s(__frd_fpath, frd_fpath);
 	set_decryption_key(decryption_key);
 	frey_init();
@@ -440,7 +487,7 @@ extern "C" __declspec(dllexport) char* __stdcall frey_read_call(char* frd_fpath,
 	if (log_fpath != NULL) {
 		output_log(log_fpath);
 	}
-	return str_export(__enclave_data, BUF_SIZE);
+	return str_export(__enclave_data, DATA_SIZE);
 }
 
 void frey_read_source_ocall(void *sc, size_t size) {

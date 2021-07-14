@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using Freyja.Core;
+using UnityEditor;
 using UnityEngine;
 
 namespace Freyja
@@ -59,6 +62,45 @@ namespace Freyja
             }
             
             return Dll.frey_read_call(frdFilePath, encryptionKey, logFilePath);
+        }
+
+        /// <summary>
+        /// Write the data from dictionary format.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <exception cref="Exception"></exception>
+        public static void WriteCall(Dictionary<string, (Type, object)> data)
+        {
+            var stringBuilder = new StringBuilder();
+            
+            foreach (var item in data)
+            {
+                stringBuilder.Append("[");
+                stringBuilder.Append(item.Key);
+                stringBuilder.Append("]");
+                stringBuilder.Append(item.Value.Item2);
+                stringBuilder.Append(":");
+
+                if (item.Value.Item1 == typeof(int))
+                {
+                    stringBuilder.Append(typeof(int));
+                }
+                else if (item.Value.Item1 == typeof(float))
+                {
+                    stringBuilder.Append(typeof(float));
+                }
+                else if (item.Value.Item1 == typeof(string))
+                {
+                    stringBuilder.Append(typeof(string));
+                }
+                else
+                {
+                    throw new Exception("The given type is not supported in current version of Freyja.");
+                }
+            }
+
+            Debug.Log(stringBuilder.ToString());
+            WriteCall(stringBuilder.ToString());
         }
     }
 }
