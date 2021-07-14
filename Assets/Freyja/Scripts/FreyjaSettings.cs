@@ -46,8 +46,15 @@ namespace Freyja
         public string LogFilePath => logFilePath;
 
         /// <summary>
+        /// It adds date prefix to log file name.
+        /// </summary>
+        [SerializeField, HideInInspector] private bool addDatePrefixToLogFileName;
+        public bool AddDatePrefixToLogFileName => addDatePrefixToLogFileName;
+
+        /// <summary>
         /// The key used for encryption.
         /// </summary>
+        [Space]
         [SerializeField] private string encryptionKey = "sj2m9zs6";
         public string EncryptionKey => encryptionKey;
 

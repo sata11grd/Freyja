@@ -99,7 +99,6 @@ namespace Freyja
                 }
             }
 
-            Debug.Log(stringBuilder.ToString());
             WriteCall(stringBuilder.ToString());
         }
     }
