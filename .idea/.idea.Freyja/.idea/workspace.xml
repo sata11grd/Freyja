@@ -21,6 +21,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Freyja/Scripts/Core/Dll.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Freyja/Demos/Demo2 - Secure Types/Scripts/DemoSceneManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Freyja/Scripts/Types/SecureString.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/FCB9DAC8-AE3A-4886-93B0-F4CD5B0DB0BE/fa/f2b36188/String.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Freyja/Scripts/Exceptions/IllegalOperationException.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Freyja/Scripts/Freyja.cs" root0="FORCE_HIGHLIGHTING" />
@@ -44,6 +45,7 @@
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Exceptions/IllegalOperationException.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Types/SecureInt.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Demos/Demo2 - Secure Types/Scripts/DemoSceneManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Types/SecureString.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1sWsmcvUqUO9dipaipiBRLjzxUV" />
@@ -104,7 +106,7 @@
       <workItem from="1626232113800" duration="3843000" />
       <workItem from="1626264536913" duration="2616000" />
       <workItem from="1626410193283" duration="12459000" />
-      <workItem from="1626440931168" duration="8130000" />
+      <workItem from="1626440931168" duration="8503000" />
     </task>
     <servers />
   </component>
