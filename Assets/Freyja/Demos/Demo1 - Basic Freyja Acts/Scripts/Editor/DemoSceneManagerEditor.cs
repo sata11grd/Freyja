@@ -10,12 +10,6 @@ namespace Freyja.Demo.Demo1.Editor
     public class ExampleScriptEditor : UnityEditor.Editor {
         public override void OnInspectorGUI(){
             base.OnInspectorGUI ();
-
-            var demoSceneManager = target as DemoSceneManager;
-
-            if (GUILayout.Button("Test")){
-                demoSceneManager.Test();
-            }
         }
     } 
 }

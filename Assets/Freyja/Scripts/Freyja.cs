@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using Freyja.Core;
 using UnityEditor;
 using UnityEngine;
@@ -63,7 +64,7 @@ namespace Freyja
             
             return Dll.frey_read_call(frdFilePath, encryptionKey, logFilePath);
         }
-
+        
         /// <summary>
         /// Write the data from dictionary format.
         /// </summary>
@@ -97,9 +98,49 @@ namespace Freyja
                 {
                     throw new Exception("The given type is not supported in current version of Freyja.");
                 }
+
+                stringBuilder.Append(",");
             }
 
             WriteCall(stringBuilder.ToString());
+        }
+
+        /// <summary>
+        /// Convert the given value from string to parameter table.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static Dictionary<string, (Type, object)> Convert(string source)
+        {
+            Debug.Log(source);
+
+            var lines = source.Split(',');
+
+            foreach (var line in lines)
+            {
+                for (var i = 0; i < line.Length; ++i)
+                {
+                    if (line[i] == ']')
+                    {
+                        var key = line.Substring(1, i - 1);
+
+                        for (var j = i; j < line.Length; ++j)
+                        {
+                            if (line[j] == ':')
+                            {
+                                var value = line.Substring(i, j - 1);
+                                var typeOfString = line.Substring(j, line.Length - 1);
+                                
+                                Debug.Log(key);
+                                Debug.Log(value);
+                                Debug.Log(typeOfString);
+                            }
+                        }
+                    }
+                }
+            }
+            
+            return null;
         }
     }
 }

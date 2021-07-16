@@ -362,31 +362,19 @@ void output_log(char* log_fpath) {
 	fclose(fp);
 }
 
+void clear_log() {
+	strcpy_s(__log, "");
+}
+
 extern "C" __declspec(dllexport) char*  __stdcall get_log() {
 	add_log("called func: get_log\n");
 	return str_export(__log, LOG_SIZE);
 }
 #pragma endregion 
 
-#pragma region Frey Base Funcs
-int frey_init() {
-	add_log("called func: frey_init\n");
-	if (initialize_enclave() < 0) {
-		return -1;
-	}
-}
-
-void frey_finalize() {
-	add_log("called func: frey_finalize\n");
-	sgx_destroy_enclave(global_eid);
-}
-#pragma endregion 
-
 #pragma region Encryption
-#define KEY_SIZE 256
-
-char __encryption_key_store[KEY_SIZE];
-char __decryption_key_store[KEY_SIZE];
+char __encryption_key_store[DATA_SIZE];
+char __decryption_key_store[DATA_SIZE];
 
 void set_encryption_key(char* key) {
 	add_log("called func: set_encryption_key\n");
@@ -459,6 +447,20 @@ char* decrypt(char *src) {
 }
 #pragma endregion
 
+#pragma region Frey Base Funcs
+int frey_init() {
+	add_log("called func: frey_init\n");
+	if (initialize_enclave() < 0) {
+		return -1;
+	}
+}
+
+void frey_finalize() {
+	add_log("called func: frey_finalize\n");
+	sgx_destroy_enclave(global_eid);
+}
+#pragma endregion 
+
 #pragma region Write Call
 extern "C" __declspec(dllexport) void __stdcall frey_write_call(char* data, char* frd_fpath, char* encryption_key, char* log_fpath = NULL) {
 	add_log("called func: frey_write_call\n");
@@ -483,6 +485,7 @@ extern "C" __declspec(dllexport) void __stdcall frey_write_call(char* data, char
 	if (log_fpath != NULL) {
 		output_log(log_fpath);
 	}
+	clear_log();
 }
 
 void frey_write_source_ocall(void *sc, size_t size){
@@ -518,6 +521,7 @@ extern "C" __declspec(dllexport) char* __stdcall frey_read_call(char* frd_fpath,
 	if (log_fpath != NULL) {
 		output_log(log_fpath);
 	}
+	clear_log();
 	return str_export(__enclave_data, DATA_SIZE);
 }
 

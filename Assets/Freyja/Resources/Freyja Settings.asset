@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   freyjaDataFilePath: C:\Users\sfuna\Desktop\.frd
   logFilePath: C:\Users\sfuna\Desktop\frey.log
-  encryptionKey: j7sd6oE
-  decryptionKey: j7sd6oE
+  addDatePrefixToLogFileName: 1
+  encryptionKey: x2Ku
+  decryptionKey: x2Ku

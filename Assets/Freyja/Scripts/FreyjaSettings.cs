@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,13 +44,36 @@ namespace Freyja
         /// </summary>
         [Header("Frey Settings")]
         [SerializeField] private string logFilePath = "C:\\Users\\sfuna\\Desktop\\frey.log";
-        public string LogFilePath => logFilePath;
+        public string LogFilePath
+        {
+            get
+            {
+                if (addDatePrefixToLogFileName)
+                {
+                    var prefix = DateTime.Now.ToString("yyyyMMdd_HHmmss") + "_";
+                    for (var index = logFilePath.Length - 1; index > 0; --index)
+                    {
+                        if (logFilePath[index] == '\\')
+                        {
+                            var logFileName = logFilePath.Substring(index + 1, logFilePath.Length - index - 1);
+                            
+                            return logFilePath.Replace(logFileName, prefix + logFileName);
+                        }
+                    }
+                }
+                else
+                {
+                    return logFilePath;
+                }
+
+                return null;
+            }
+        }
 
         /// <summary>
         /// It adds date prefix to log file name.
         /// </summary>
-        [SerializeField, HideInInspector] private bool addDatePrefixToLogFileName;
-        public bool AddDatePrefixToLogFileName => addDatePrefixToLogFileName;
+        [SerializeField] private bool addDatePrefixToLogFileName;
 
         /// <summary>
         /// The key used for encryption.
