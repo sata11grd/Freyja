@@ -10,15 +10,42 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Freyja/Scripts/Core/Dll.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Freyja/Demo/Demo1/Scripts/Editor/DemoSceneManagerEditor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Freyja/Demos/Demo2 - Secure Types/Scripts/DemoSceneManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Freyja/Scripts/Types/SecureString.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/FCB9DAC8-AE3A-4886-93B0-F4CD5B0DB0BE/fa/f2b36188/String.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Freyja/Scripts/Exceptions/IllegalOperationException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Freyja/Scripts/Freyja.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/EF667CDC-82BF-4A4E-911D-1DDEA9FF581D/61/9d4eabae/Debug.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Freyja/Scripts/Exceptions/UnsupportedFormatException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Freyja/Scripts/Meta/FreyjaSettings.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Freyja/Demo/Demo1/Scripts/Editor/DemoSceneManagerEditor.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Core/Dll.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Demo/Demo1/Scripts/Level/Rotater.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Demo/Demo1/Scripts/DemoSceneManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Demo/Demo1/Scripts/Editor/DemoSceneManagerEditor.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/FreyjaSettings.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Meta/FreyjaSettings.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Logging/Logger.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Exceptions/UnsupportedTypeException.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Exceptions/UnsupportedFormatException.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Freyja.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Demos/Demo1 - Basic Freyja Acts/Scripts/DemoSceneManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Exceptions/IllegalOperationException.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Types/SecureInt.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Demos/Demo2 - Secure Types/Scripts/DemoSceneManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Types/SecureString.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1sWsmcvUqUO9dipaipiBRLjzxUV" />
@@ -32,7 +59,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="CodeLensConfigurable" />
+    <property name="settings.editor.selected.configurable" value="InlayHintsGeneralOptionsPageId" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
@@ -74,6 +101,12 @@
       <workItem from="1623059391652" duration="526000" />
       <workItem from="1626061348024" duration="3590000" />
       <workItem from="1626148115189" duration="1717000" />
+      <workItem from="1626173375094" duration="5771000" />
+      <workItem from="1626182268010" duration="759000" />
+      <workItem from="1626232113800" duration="3843000" />
+      <workItem from="1626264536913" duration="2616000" />
+      <workItem from="1626410193283" duration="12459000" />
+      <workItem from="1626440931168" duration="8503000" />
     </task>
     <servers />
   </component>
