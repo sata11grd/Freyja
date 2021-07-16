@@ -32,13 +32,13 @@ namespace Freyja.Demo.Demo2
         private void Spawn()
         {
             _shp = new SecureInt(100, "hp");
-            //_smp = new SecureInt(100, "mp");
+            _smp = new SecureInt(100, "mp");
         }
 
         private void Show()
         {
             hpLabel.text = "HP: " + _shp;
-            //mpLabel.text = "MP: " + _smp;
+            mpLabel.text = "MP: " + _smp;
         }
 
         private void Damage(int hp, int mp)

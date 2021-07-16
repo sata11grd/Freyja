@@ -397,9 +397,11 @@ char* encrypt(char *src) {
 	char dest[DATA_SIZE];
 	strcpy_s(dest, src);
 	for (i = 0; i < src_len; i++, key_pos++) {
+		if (key_pos > key_len - 1) {
+			key_pos = 0;
+		}
 		add_log("\t[ENCRYPTING...] ");
 		add_log(dest);
-		if (key_pos > key_len) key_pos = 0;
 		dest[i] = src[i] ^ __encryption_key_store[key_pos];
 		add_log(" (");
 		add_log(src[i]);
@@ -426,9 +428,11 @@ char* decrypt(char *src) {
 	char dest[DATA_SIZE];
 	strcpy_s(dest, src);
 	for (i = 0; i < src_len; i++, key_pos++) {
+		if (key_pos > key_len - 1) {
+			key_pos = 0;
+		}
 		add_log("\t[DECRYPTING...] ");
 		add_log(dest);
-		if (key_pos > key_len) key_pos = 0;
 		dest[i] = src[i] ^ __decryption_key_store[key_pos];
 		add_log(" (");
 		add_log(src[i]);
@@ -496,7 +500,8 @@ void frey_write_source_ocall(void *sc, size_t size){
 	if (fp == NULL) {
 		add_log("error: the file could not be opened.\n");
 	}
-	fprintf(fp, __enclave_data);
+	fwrite(__enclave_data, sizeof(char), sizeof(__enclave_data) / sizeof(__enclave_data[0]), fp);
+	// fprintf(fp, __enclave_data);
 	fclose(fp);
 }
 #pragma endregion
