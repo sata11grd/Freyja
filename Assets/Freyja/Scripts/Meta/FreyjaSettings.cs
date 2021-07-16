@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Freyja
+namespace Freyja.Meta
 {
     [CreateAssetMenu(fileName = "Freyja Settings", menuName = "Freyja/Freyja Settings")]
     public class FreyjaSettings : ScriptableObject

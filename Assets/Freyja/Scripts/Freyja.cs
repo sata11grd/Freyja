@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Freyja.Core;
+using Freyja.Exceptions;
+using Freyja.Meta;
 using UnityEditor;
 using UnityEngine;
 
@@ -97,13 +99,45 @@ namespace Freyja
                 }
                 else
                 {
-                    throw new Exception("The given type is not supported in current version of Freyja.");
+                    throw new UnsupportedTypeException("The given type is not supported in current version of Freyja.");
                 }
 
                 stringBuilder.Append(",");
             }
 
             WriteCall(stringBuilder.ToString().TrimEnd(','));
+        }
+
+        /// <summary>
+        /// Write the data from dictionary format.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <exception cref="Exception"></exception>
+        public static void WriteCall(Dictionary<string, object> data)
+        {
+            var table = new Dictionary<string, (Type, object)>();
+            
+            foreach (var item in data)
+            {
+                if (item.Value is int)
+                {
+                    table.Add(item.Key, (typeof(int), item.Value));
+                }
+                else if (item.Value is float)
+                {
+                    table.Add(item.Key, (typeof(float), item.Value));
+                }
+                else if (item.Value is string)
+                {
+                    table.Add(item.Key, (typeof(string), item.Value));
+                }
+                else
+                {
+                    throw new UnsupportedTypeException("The given type is not supported in current version of Freyja.");
+                }
+            }
+            
+            WriteCall(table);
         }
 
         /// <summary>
@@ -141,7 +175,7 @@ namespace Freyja
                         }
                         else
                         {
-                            throw new Exception("The given type is not supported in current version of Freyja.");
+                            throw new UnsupportedTypeException("The given type is not supported in current version of Freyja.");
                         }
                     }
                 }
