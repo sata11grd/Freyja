@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Freyja.Core;
@@ -102,7 +103,7 @@ namespace Freyja
                 stringBuilder.Append(",");
             }
 
-            WriteCall(stringBuilder.ToString());
+            WriteCall(stringBuilder.ToString().TrimEnd(','));
         }
 
         /// <summary>
@@ -110,12 +111,11 @@ namespace Freyja
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static Dictionary<string, (Type, object)> Convert(string source)
+        public static Dictionary<string, object> Convert(string source)
         {
-            Debug.Log(source);
-
+            var table = new Dictionary<string, object>();
             var lines = source.Split(',');
-
+            
             foreach (var line in lines)
             {
                 for (var i = 0; i < line.Length; ++i)
@@ -123,24 +123,31 @@ namespace Freyja
                     if (line[i] == ']')
                     {
                         var key = line.Substring(1, i - 1);
+                        var valueType = line.Substring(i + 1, line.Length - i - 1).Split(':').ToArray();
+                        var value = valueType[0];
+                        var type = Type.GetType(valueType[1]);
 
-                        for (var j = i; j < line.Length; ++j)
+                        if (type == typeof(int))
                         {
-                            if (line[j] == ':')
-                            {
-                                var value = line.Substring(i, j - 1);
-                                var typeOfString = line.Substring(j, line.Length - 1);
-                                
-                                Debug.Log(key);
-                                Debug.Log(value);
-                                Debug.Log(typeOfString);
-                            }
+                            table.Add(key, int.Parse(value));
+                        }
+                        else if (type == typeof(float))
+                        {
+                            table.Add(key, float.Parse(value));
+                        }
+                        else if (type == typeof(string))
+                        {
+                            table.Add(key, value);
+                        }
+                        else
+                        {
+                            throw new Exception("The given type is not supported in current version of Freyja.");
                         }
                     }
                 }
             }
             
-            return null;
+            return table;
         }
     }
 }

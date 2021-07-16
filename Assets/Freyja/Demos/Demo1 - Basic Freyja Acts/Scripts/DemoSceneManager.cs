@@ -24,6 +24,7 @@ namespace Freyja.Demo.Demo1
             parameterTable.Add("user_id", (typeof(string), userIdInputField.text));
             parameterTable.Add("hp", (typeof(float), hpSlider.value));
             parameterTable.Add("mp", (typeof(float), mpSlider.value));
+            
             Freyja.WriteCall(parameterTable);
         }
 
@@ -31,7 +32,19 @@ namespace Freyja.Demo.Demo1
         {
             Debug.Log("[Freyja] SecureLoad is called.");
 
-            Freyja.ReadCall();
+            var read = Freyja.ReadCall();
+            
+            Debug.Log("[Freyja] loaded value: \n" + read);
+
+            var converted = Freyja.Convert(read);
+
+            var userId = (string) converted["user_id"];
+            var hp = (float) converted["hp"];
+            var mp = (float) converted["mp"];
+            
+            Debug.Log(userId);
+            Debug.Log(hp);
+            Debug.Log(mp);
         }
 
         private void Awake()
