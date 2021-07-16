@@ -297,44 +297,159 @@ char* str_export(char* str, int size) {
 }
 #pragma endregion
 
-#define BUF_SIZE 512
+#define DATA_SIZE 5096
 
-char gbuf[BUF_SIZE];
-char gfpath[256];
+char __enclave_data[DATA_SIZE];
+char __frd_fpath[256];
 
 #pragma region Logging
-#define LOG_SIZE 1024
+#define LOG_SIZE 256 * 256
 
-char log[LOG_SIZE];
-bool log_is_initialized = false;
+char __log[LOG_SIZE];
+bool __log_is_initialized = false;
 
 void add_log(char* value) {
-	if (!log_is_initialized) {
-		strcpy_s(log, "[FREY EXECUTION LOG]\n");
-		log_is_initialized = true;
+	if (!__log_is_initialized) {
+		strcpy_s(__log, "[FREY EXECUTION LOG]\n");
+		__log_is_initialized = true;
 	}
-	strcat_s(log, value);
+	strcat_s(__log, value);
+}
+
+void add_log(char value) {
+	for (int i = 0; i < LOG_SIZE - 1; ++i) {
+		if (__log[i] == '\0') {
+			__log[i] = value;
+			__log[i + 1] = '\0';
+			return;
+		}
+	}
+}
+
+void add_log_line(char* prefix, char* content, char* suffix) {
+	strcat_s(__log, prefix);
+	strcat_s(__log, content);
+	strcat_s(__log, suffix);
+	strcat_s(__log, "\n");
+}
+
+void add_log_star_line() {
+	strcat_s(__log, "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*\n");
 }
 
 void add_gbuf_stat_to_log() {
 	add_log("gbuf stat: (START)");
-	add_log(gbuf);
+	add_log(__enclave_data);
 	add_log("(END)\n");
 }
 
 void print_log() {
-	printf("%s", log);
+	printf("%s", __log);
 }
 
 void print_gbuf_stat() {
-	printf("gbuf stat: %s\n", gbuf);
+	printf("gbuf stat: %s\n", __enclave_data);
+}
+
+void output_log(char* log_fpath) {
+	FILE *fp;
+	fopen_s(&fp, log_fpath, "w");
+	if (fp == NULL) {
+		add_log("error: the file could not be opened.\n");
+		exit(1);
+	}
+	fprintf(fp, __log);
+	fclose(fp);
+}
+
+void clear_log() {
+	strcpy_s(__log, "");
 }
 
 extern "C" __declspec(dllexport) char*  __stdcall get_log() {
 	add_log("called func: get_log\n");
-	return str_export(log, LOG_SIZE);
+	return str_export(__log, LOG_SIZE);
 }
 #pragma endregion 
+
+#pragma region Encryption
+char __encryption_key_store[DATA_SIZE];
+char __decryption_key_store[DATA_SIZE];
+
+void set_encryption_key(char* key) {
+	add_log("called func: set_encryption_key\n");
+	add_log_line("(-arg1: key) ", key, " : char*");
+	strcpy_s(__encryption_key_store, key);
+}
+
+void set_decryption_key(char* key) {
+	add_log("called func: set_decryption_key\n");
+	add_log_line("(-arg1: key) ", key, " : char*");
+	strcpy_s(__decryption_key_store, key);
+}
+
+char* encrypt(char *src) {
+	add_log("called func: encrypt\n");
+	add_log_line("(-arg1: src) ", src, " : char*");
+	int src_len = strlen(src);
+	int key_len = strlen(__encryption_key_store);
+	int key_pos = 0, i;
+	char dest[DATA_SIZE];
+	strcpy_s(dest, src);
+	for (i = 0; i < src_len; i++, key_pos++) {
+		if (key_pos > key_len - 1) {
+			key_pos = 0;
+		}
+		add_log("\t[ENCRYPTING...] ");
+		add_log(dest);
+		dest[i] = src[i] ^ __encryption_key_store[key_pos];
+		add_log(" (");
+		add_log(src[i]);
+		add_log(" -> ");
+		add_log(dest[i]);
+		add_log(" by ");
+		add_log(__encryption_key_store[key_pos]);
+		add_log(")\n");
+	}
+	add_log_star_line();
+	add_log_line("# origin data:\n", src, "");
+	add_log_star_line();
+	add_log_line("# encrypted data:\n", dest, "");
+	add_log_star_line();
+	return dest;
+}
+
+char* decrypt(char *src) {
+	add_log("called func: decrypt\n");
+	add_log_line("(-arg1: src) ", src, " : char*");
+	int src_len = strlen(src);
+	int key_len = strlen(__decryption_key_store);
+	int key_pos = 0, i;
+	char dest[DATA_SIZE];
+	strcpy_s(dest, src);
+	for (i = 0; i < src_len; i++, key_pos++) {
+		if (key_pos > key_len - 1) {
+			key_pos = 0;
+		}
+		add_log("\t[DECRYPTING...] ");
+		add_log(dest);
+		dest[i] = src[i] ^ __decryption_key_store[key_pos];
+		add_log(" (");
+		add_log(src[i]);
+		add_log(" -> ");
+		add_log(dest[i]);
+		add_log(" by ");
+		add_log(__decryption_key_store[key_pos]);
+		add_log(")\n");
+	}
+	add_log_star_line();
+	add_log_line("# origin data:\n", src, "");
+	add_log_star_line();
+	add_log_line("# decrypted data:\n", dest, "");
+	add_log_star_line();
+	return dest;
+}
+#pragma endregion
 
 #pragma region Frey Base Funcs
 int frey_init() {
@@ -350,57 +465,77 @@ void frey_finalize() {
 }
 #pragma endregion 
 
-#pragma region Encryption
-char* crypt(char *src, char *key) {
-	int src_len = strlen(src);
-	int key_len = strlen(key);
-	int key_pos = 0, i;
-	char dest[BUF_SIZE];
-	strcpy_s(dest, src);
-	for (i = 0; i < src_len; i++, key_pos++) {
-		if (key_pos > key_len) key_pos = 0;
-		dest[i] = src[i] ^ key[key_pos];
-	}
-	return dest;
-}
-#pragma endregion
-
 #pragma region Write Call
-extern "C" __declspec(dllexport) void __stdcall frey_write_call(char* data, char* fpath) {
+extern "C" __declspec(dllexport) void __stdcall frey_write_call(char* data, char* frd_fpath, char* encryption_key, char* log_fpath = NULL) {
 	add_log("called func: frey_write_call\n");
-	strcpy_s(gfpath, fpath);
+	add_log("(-arg1: data) ");
+	add_log(data);
+	add_log(" : char*\n");
+	add_log("(-arg2: frd_fpath) ");
+	add_log(frd_fpath);
+	add_log(" : char*\n");
+	add_log("(-arg3: encryption_key) ");
+	add_log(encryption_key);
+	add_log(" : char*\n");
+	add_log("(-arg4: log_fpath) ");
+	add_log(log_fpath);
+	add_log(" : char*\n");
+	strcpy_s(__frd_fpath, frd_fpath);
+	set_encryption_key(encryption_key);
 	frey_init();
-	strcpy_s(gbuf, crypt(data, "WjFK7Rrh"));
+	strcpy_s(__enclave_data, encrypt(data));
 	frey_write(global_eid);
 	frey_finalize();
+	if (log_fpath != NULL) {
+		output_log(log_fpath);
+	}
+	clear_log();
+	return;
 }
 
 void frey_write_source_ocall(void *sc, size_t size){
 	add_log("called func: frey_write_source_ocall\n");
-	FILE* fp = fopen(gfpath, "w");
-	fprintf(fp, gbuf);
+	FILE *fp;
+	fopen_s(&fp, __frd_fpath, "wb");
+	if (fp == NULL) {
+		add_log("error: the file could not be opened.\n");
+	}
+	fwrite(__enclave_data, sizeof(char), sizeof(__enclave_data) / sizeof(__enclave_data[0]), fp);
 	fclose(fp);
 }
 #pragma endregion
 
 #pragma region Read Call
-extern "C" __declspec(dllexport) void __stdcall frey_read_call(char* fpath) {
+extern "C" __declspec(dllexport) char* __stdcall frey_read_call(char* frd_fpath, char* decryption_key, char* log_fpath = NULL) {
 	add_log("called func: frey_read_call\n");
-	strcpy_s(gfpath, fpath);
+	add_log("(-arg1: frd_fpath) ");
+	add_log(frd_fpath);
+	add_log(" : char*\n");
+	add_log("(-arg2: decryption_key) ");
+	add_log(decryption_key);
+	add_log(" : char*\n");
+	add_log("(-arg3: log_fpath) ");
+	add_log(log_fpath);
+	add_log(" : char*\n");
+	strcpy_s(__frd_fpath, frd_fpath);
+	set_decryption_key(decryption_key);
 	frey_init();
 	frey_read(global_eid);
 	frey_finalize();
+	if (log_fpath != NULL) {
+		output_log(log_fpath);
+	}
+	clear_log();
+	return str_export(__enclave_data, DATA_SIZE);
 }
 
 void frey_read_source_ocall(void *sc, size_t size) {
 	add_log("called func: frey_read_source_ocall\n");
 	FILE *fp;
-	fprintf(stderr, "%s is going to be read.\n", gfpath);
-
-	fopen_s(&fp, gfpath, "r");
+	fopen_s(&fp, __frd_fpath, "r");
 	if (fp == NULL) {
-		fprintf(stderr, "JS File open error\n");
-		exit(1);
+		strcpy_s(__enclave_data, "");
+		return;
 	}
 	char c;
 	int i = 0;
@@ -408,11 +543,11 @@ void frey_read_source_ocall(void *sc, size_t size) {
 	while ((c = (char)fgetc(fp)) != EOF) {
 		out[i++] = c;
 		if (i == size) {
-			printf("The file size exceeds %zu bytes.\n", size);
-			exit(1);
+			add_log("error: the file size exceeds more bytes\n");
 		}
 	}
-	strcpy_s(gbuf, crypt(out, "WjFK7Rrh"));
+	strcpy_s(__enclave_data, decrypt(out));
+	fclose(fp);
 }
 #pragma endregion
 
@@ -422,29 +557,15 @@ extern "C" __declspec(dllexport) bool __stdcall is_aval_test() {
 	return true;
 }
 
-extern "C" __declspec(dllexport) char* __stdcall frey_read_call_test(char* fpath) {
-	add_log("called func: frey_read_call_test\n");
-	add_gbuf_stat_to_log();
-	frey_read_call(fpath);
-	add_gbuf_stat_to_log();
-	return str_export(log, LOG_SIZE);
-}
-
-extern "C" __declspec(dllexport) char* __stdcall frey_write_call_test(char* data, char* fpath) {
-	add_log("called func: frey_write_call_test (args: ");
-	add_log(data);
-	add_log(")\n");
-	frey_write_call(data, fpath);
-	return str_export(log, LOG_SIZE);
-}
-
 extern "C" __declspec(dllexport) char* __stdcall encrypt_test(char* value, char* key) {
 	add_log("called func: encrypt_test\n");
-	return crypt(value, key);
+	set_encryption_key(key);
+	return encrypt(value);
 }
 
 extern "C" __declspec(dllexport) char* __stdcall decrypt_test(char* value, char* key) {
 	add_log("called func: decrypt_test\n");
-	return crypt(value, key);
+	set_decryption_key(key);
+	return decrypt(value);
 }
 #pragma endregion
