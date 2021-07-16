@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Freyja.Core;
+using Freyja.Exceptions;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -32,13 +33,12 @@ namespace Freyja.Types
                 {
                     var stats = Freyja.Convert(data);
                     stats[_key] = value;
-                    Debug.Log(stats[_key]);
                     Freyja.WriteCall(stats);
                 }
             }
         }
         
-        private string _key;
+        private readonly string _key;
 
         public SecureInt(int value, string key)
         {
@@ -49,6 +49,61 @@ namespace Freyja.Types
         public override string ToString()
         {
             return Value.ToString();
+        }
+        
+        public static int operator +(SecureInt a, SecureInt b)
+        {
+            if (a._key != b._key)
+            {
+                throw new IllegalOperationException("The given key identifiers are not be matched.");
+            }
+
+            return a.Value + b.Value;
+        }
+
+        public static int operator +(SecureInt a, int b)
+        {
+            return a.Value + b;
+        }
+
+        public static int operator -(SecureInt a, SecureInt b)
+        {
+            if (a._key != b._key)
+            {
+                throw new IllegalOperationException("The given key identifiers are not be matched.");
+            }
+
+            return a.Value - b.Value;
+        }
+        
+        public static int operator -(SecureInt a, int b)
+        {
+            return a.Value - b;
+        }
+        
+        public static bool operator ==([NotNull]SecureInt a, [NotNull]SecureInt b)
+        {
+            if (a._key != b._key)
+            {
+                throw new IllegalOperationException("The given key identifiers are not be matched.");
+            }
+
+            return a.Value == b.Value;
+        }
+        
+        public static bool operator !=([NotNull]SecureInt a, [NotNull]SecureInt b)
+        {
+            return !(a == b);
+        }
+
+        public static explicit operator SecureInt(int value)
+        {
+            return new SecureInt(value, null);
+        }
+
+        public static implicit operator int(SecureInt value)
+        {
+            return value.Value;
         }
     }
 }

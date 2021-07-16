@@ -496,12 +496,11 @@ extern "C" __declspec(dllexport) void __stdcall frey_write_call(char* data, char
 void frey_write_source_ocall(void *sc, size_t size){
 	add_log("called func: frey_write_source_ocall\n");
 	FILE *fp;
-	fopen_s(&fp, __frd_fpath, "w");
+	fopen_s(&fp, __frd_fpath, "wb");
 	if (fp == NULL) {
 		add_log("error: the file could not be opened.\n");
 	}
 	fwrite(__enclave_data, sizeof(char), sizeof(__enclave_data) / sizeof(__enclave_data[0]), fp);
-	// fprintf(fp, __enclave_data);
 	fclose(fp);
 }
 #pragma endregion

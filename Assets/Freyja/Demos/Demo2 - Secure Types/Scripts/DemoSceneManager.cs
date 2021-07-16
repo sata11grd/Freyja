@@ -17,6 +17,8 @@ namespace Freyja.Demo.Demo2
         [SerializeField] private Button showButton;
         [SerializeField] private Button damageButton;
         [SerializeField] private Button recoverButton;
+        [SerializeField] private int minDamage = 5;
+        [SerializeField] private int maxDamage = 15;
 
         private SecureInt _shp;
         private SecureInt _smp;
@@ -24,8 +26,8 @@ namespace Freyja.Demo.Demo2
         private void Awake()
         {
             spawnButton.onClick.AddListener(Spawn);
-            damageButton.onClick.AddListener(() => Damage(UnityEngine.Random.Range(5, 16), UnityEngine.Random.Range(5, 16)));
-            recoverButton.onClick.AddListener(() => Recover(UnityEngine.Random.Range(5, 16), UnityEngine.Random.Range(5, 16)));
+            damageButton.onClick.AddListener(() => Damage(UnityEngine.Random.Range(minDamage, maxDamage), UnityEngine.Random.Range(minDamage, maxDamage)));
+            recoverButton.onClick.AddListener(() => Recover(UnityEngine.Random.Range(minDamage, maxDamage), UnityEngine.Random.Range(minDamage, maxDamage)));
             showButton.onClick.AddListener(Show);
         }
 
@@ -43,44 +45,14 @@ namespace Freyja.Demo.Demo2
 
         private void Damage(int hp, int mp)
         {
-            if (_shp.Value - hp > 0)
-            {
-                _shp.Value -= hp;
-            }
-            else
-            {
-                _shp.Value = 0;
-            }
-
-            if (_smp.Value - mp > 0)
-            {
-                _smp.Value -= mp;
-            }
-            else
-            {
-                _smp.Value = 0;
-            }
+            _shp.Value = Mathf.Max(0, _shp - hp);
+            _smp.Value = Mathf.Max(0, _smp - mp);
         }
 
         private void Recover(int hp, int mp)
         {
-            if (_shp.Value + hp <= 200)
-            {
-                _shp.Value += hp;
-            }
-            else
-            {
-                _shp.Value = 200;
-            }
-            
-            if (_smp.Value + mp <= 200)
-            {
-                _smp.Value += mp;
-            }
-            else
-            {
-                _smp.Value = 200;
-            }
+            _shp.Value = Mathf.Min(200, _shp + hp);
+            _smp.Value = Mathf.Min(200, _smp + mp);
         }
     }
 }

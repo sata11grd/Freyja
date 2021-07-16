@@ -2120,3 +2120,5 @@ MonoBehaviour:
   showButton: {fileID: 738994706}
   damageButton: {fileID: 1305024598}
   recoverButton: {fileID: 287815594}
+  minDamage: 10
+  maxDamage: 10
