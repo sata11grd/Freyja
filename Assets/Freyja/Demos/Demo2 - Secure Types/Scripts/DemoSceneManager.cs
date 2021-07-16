@@ -13,88 +13,74 @@ namespace Freyja.Demo.Demo2
     {
         [SerializeField] private Text hpLabel;
         [SerializeField] private Text mpLabel;
+        [SerializeField] private Button spawnButton;
+        [SerializeField] private Button showButton;
         [SerializeField] private Button damageButton;
         [SerializeField] private Button recoverButton;
 
         private SecureInt _shp;
         private SecureInt _smp;
-
-        private void Refresh()
-        {
-            hpLabel.text = "HP: " + _shp;
-            mpLabel.text = "MP: " + _smp;
-        }
         
         private void Awake()
         {
+            spawnButton.onClick.AddListener(Spawn);
             damageButton.onClick.AddListener(() => Damage(UnityEngine.Random.Range(5, 16), UnityEngine.Random.Range(5, 16)));
             recoverButton.onClick.AddListener(() => Recover(UnityEngine.Random.Range(5, 16), UnityEngine.Random.Range(5, 16)));
+            showButton.onClick.AddListener(Show);
+        }
 
-            _shp = 100;
-            _smp = 100;
-            
-            Refresh();
-            return;
-            var stats = new Dictionary<string, (Type, object)>();
-            
-            stats.Add("hp", (typeof(int), 100));
-            stats.Add("mp", (typeof(int), 100));
-            
-            Freyja.WriteCall(stats);
+        private void Spawn()
+        {
+            _shp = new SecureInt(100, "hp");
+            //_smp = new SecureInt(100, "mp");
+        }
+
+        private void Show()
+        {
+            hpLabel.text = "HP: " + _shp;
+            //mpLabel.text = "MP: " + _smp;
         }
 
         private void Damage(int hp, int mp)
         {
-            if (_shp - hp > 0)
+            if (_shp.Value - hp > 0)
             {
-                _shp -= hp;
+                _shp.Value -= hp;
             }
             else
             {
-                _shp = 0;
+                _shp.Value = 0;
             }
 
-            if (_smp - mp > 0)
+            if (_smp.Value - mp > 0)
             {
-                _smp -= mp;
+                _smp.Value -= mp;
             }
             else
             {
-                _smp = 0;
+                _smp.Value = 0;
             }
-            
-            Refresh();
-            
-            return;
-            var stats = Freyja.Convert(Freyja.ReadCall());
-
-            stats["hp"] = (int)stats["hp"] - hp;
-            stats["mp"] = (int)stats["mp"] - mp;
-            
-            Freyja.WriteCall(stats);
         }
 
         private void Recover(int hp, int mp)
         {
-            if (_shp + hp <= 200)
+            if (_shp.Value + hp <= 200)
             {
-                _shp += hp;
+                _shp.Value += hp;
             }
             else
             {
-                _shp = 200;
+                _shp.Value = 200;
             }
             
-            if (_smp + mp <= 200)
+            if (_smp.Value + mp <= 200)
             {
-                _smp += mp;
+                _smp.Value += mp;
             }
             else
             {
-                _smp = 200;
+                _smp.Value = 200;
             }
-            
-            Refresh();
         }
     }
 }

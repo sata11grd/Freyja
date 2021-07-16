@@ -486,6 +486,7 @@ extern "C" __declspec(dllexport) void __stdcall frey_write_call(char* data, char
 		output_log(log_fpath);
 	}
 	clear_log();
+	return;
 }
 
 void frey_write_source_ocall(void *sc, size_t size){
@@ -494,7 +495,6 @@ void frey_write_source_ocall(void *sc, size_t size){
 	fopen_s(&fp, __frd_fpath, "w");
 	if (fp == NULL) {
 		add_log("error: the file could not be opened.\n");
-		exit(1);
 	}
 	fprintf(fp, __enclave_data);
 	fclose(fp);
@@ -530,8 +530,8 @@ void frey_read_source_ocall(void *sc, size_t size) {
 	FILE *fp;
 	fopen_s(&fp, __frd_fpath, "r");
 	if (fp == NULL) {
-		add_log("error: the file could not be opened.\n");
-		exit(1);
+		strcpy_s(__enclave_data, "");
+		return;
 	}
 	char c;
 	int i = 0;
@@ -540,10 +540,10 @@ void frey_read_source_ocall(void *sc, size_t size) {
 		out[i++] = c;
 		if (i == size) {
 			add_log("error: the file size exceeds more bytes\n");
-			exit(1);
 		}
 	}
 	strcpy_s(__enclave_data, decrypt(out));
+	fclose(fp);
 }
 #pragma endregion
 

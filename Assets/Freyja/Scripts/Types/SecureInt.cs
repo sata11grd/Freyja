@@ -7,65 +7,48 @@ using UnityEngine;
 
 namespace Freyja.Types
 {
-    public readonly struct SecureInt
+    public class SecureInt
     {
-        private readonly int _value;
-
-        public SecureInt(int value)
+        public int Value
         {
-            _value = value;
-        }
+            get
+            {
+                var data = Freyja.ReadCall();
+                var stats = Freyja.Convert(data);
+                
+                return (int) stats[_key];
+            }
+            set
+            {
+                var data = Freyja.ReadCall();
 
-        public static implicit operator SecureInt(int value)
-        {
-            //Dll.frey_write_call_test(value.ToString(), "");
-            return new SecureInt(value);
-        }
-
-        public static implicit operator int(SecureInt value)
-        {
-            //Dll.frey_read_call_test("");
-            return value._value;
-        }
-
-        public static int operator +(SecureInt a, SecureInt b)
-        {
-            return a._value + b._value;
-        }
-
-        public static int operator -(SecureInt a, SecureInt b)
-        {
-            return a._value - b._value;
-        }
-
-        public static bool operator ==(SecureInt a, SecureInt b)
-        {
-            return a._value == b._value;
-        }
-
-        public static bool operator !=(SecureInt a, SecureInt b)
-        {
-            return a._value == b._value;
+                if (string.IsNullOrEmpty(data))
+                {
+                    var stats = new Dictionary<string, object>();
+                    stats.Add(_key, value);
+                    Freyja.WriteCall(stats);
+                }
+                else
+                {
+                    var stats = Freyja.Convert(data);
+                    stats[_key] = value;
+                    Debug.Log(stats[_key]);
+                    Freyja.WriteCall(stats);
+                }
+            }
         }
         
-        public bool Equals(SecureInt other)
-        {
-            return _value == other._value;
-        }
+        private string _key;
 
-        public override bool Equals(object obj)
+        public SecureInt(int value, string key)
         {
-            return obj is SecureInt other && Equals(other);
-        }
-
-        public override int GetHashCode()
-        {
-            return _value;
+            _key = key;
+            Value = value;
         }
 
         public override string ToString()
         {
-            return _value.ToString();
+            return Value.ToString();
         }
     }
 }
