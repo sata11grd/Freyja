@@ -3,8 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Freyja.Core;
+using Freyja.FileIO;
 using Freyja.Meta;
 using Freyja.Types;
+using UnityEditor;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
@@ -25,6 +28,10 @@ namespace Freyja.Demo.Demo4
         {
             const int times = 10;
             const string value = "TestCaseString";
+
+            var result = new string[256, 256];
+            result[0, 0] = "Secure Mode [sec]";
+            result[0, 1] = "Non Secure Mode [sec]";
             
             var stopwatch = new Stopwatch();
 
@@ -36,8 +43,9 @@ namespace Freyja.Demo.Demo4
             {
                 Freyja.WriteCall(value);
             }
+            stopwatch.Stop();
             
-            Debug.Log(stopwatch.Elapsed);
+            result[1, 0] = stopwatch.Elapsed.ToString();
 
             // non secure mode test
             FreyjaSettings.Instance().NonSecureMode = true;
@@ -47,8 +55,16 @@ namespace Freyja.Demo.Demo4
             {
                 Freyja.WriteCall(value);
             }
+            stopwatch.Stop();
             
-            Debug.Log(stopwatch.Elapsed);
+            result[1, 1] = stopwatch.Elapsed.ToString();
+            
+            // out
+            CsvFileManager.Write(result, Application.streamingAssetsPath + "/Freyja/Demo4 - Speed Test 2 Results/" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv");
+            
+            #if UNITY_EDITOR
+            AssetDatabase.Refresh();
+            #endif
         }
     }
 }
