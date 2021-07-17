@@ -175,7 +175,7 @@ namespace Freyja
                         }
                         else
                         {
-                            throw new UnsupportedTypeException("The given type is not supported in current version of Freyja.");
+                            throw new UnsupportedTypeException($"The given type is not supported in current version of Freyja.");
                         }
                     }
                 }

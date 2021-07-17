@@ -22,7 +22,7 @@ namespace Freyja.Types
             set
             {
                 var data = Freyja.ReadCall();
-
+                
                 if (string.IsNullOrEmpty(data))
                 {
                     var stats = new Dictionary<string, object>();

@@ -15,5 +15,5 @@ MonoBehaviour:
   freyjaDataFilePath: C:\Users\sfuna\Desktop\.frd
   logFilePath: C:\Users\sfuna\Desktop\frey.log
   addDatePrefixToLogFileName: 1
-  encryptionKey: x2Ku
-  decryptionKey: x2Ku
+  encryptionKey: x4Ku
+  decryptionKey: x4Ku
