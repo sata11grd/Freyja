@@ -2,7 +2,7 @@
 # Freyja - Unity Secret Calculation Exts
 
 # What is Freyja for?
-- Freyja makes secret calculation possible.
+- It makes secret calculation possible in Unity
 - For advanced security protection
 - For developing anti-cheat system easier
 
