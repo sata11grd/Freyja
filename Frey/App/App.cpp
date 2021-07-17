@@ -38,6 +38,7 @@
 #include "sgx_urts.h"
 #include "App.h"
 #include "Enclave_u.h"
+#include <string>
 
 #pragma region SGX Base Funcs
  /* Global EID shared by multiple threads */
@@ -466,7 +467,7 @@ void frey_finalize() {
 #pragma endregion 
 
 #pragma region Write Call
-extern "C" __declspec(dllexport) void __stdcall frey_write_call(char* data, char* frd_fpath, char* encryption_key, char* log_fpath = NULL) {
+extern "C" __declspec(dllexport) void __stdcall frey_write_call(char* data, char* frd_fpath, char* encryption_key, char* log_fpath = NULL, bool non_secure_mode = false) {
 	add_log("called func: frey_write_call\n");
 	add_log("(-arg1: data) ");
 	add_log(data);
@@ -480,12 +481,23 @@ extern "C" __declspec(dllexport) void __stdcall frey_write_call(char* data, char
 	add_log("(-arg4: log_fpath) ");
 	add_log(log_fpath);
 	add_log(" : char*\n");
+	add_log("(-arg5: non_secure_mode) ");
+	add_log(non_secure_mode);
+	add_log(" : bool\n");
 	strcpy_s(__frd_fpath, frd_fpath);
 	set_encryption_key(encryption_key);
-	frey_init();
+	if (!non_secure_mode)
+	{
+		frey_init();
+	}
 	strcpy_s(__enclave_data, encrypt(data));
-	frey_write(global_eid);
-	frey_finalize();
+	if (non_secure_mode) {
+		frey_write_source_ocall(NULL, NULL);
+	}
+	else {
+		frey_write(global_eid);
+		frey_finalize();
+	}
 	if (log_fpath != NULL) {
 		output_log(log_fpath);
 	}
@@ -506,7 +518,7 @@ void frey_write_source_ocall(void *sc, size_t size){
 #pragma endregion
 
 #pragma region Read Call
-extern "C" __declspec(dllexport) char* __stdcall frey_read_call(char* frd_fpath, char* decryption_key, char* log_fpath = NULL) {
+extern "C" __declspec(dllexport) char* __stdcall frey_read_call(char* frd_fpath, char* decryption_key, char* log_fpath = NULL, bool non_secure_mode = false) {
 	add_log("called func: frey_read_call\n");
 	add_log("(-arg1: frd_fpath) ");
 	add_log(frd_fpath);
@@ -517,11 +529,23 @@ extern "C" __declspec(dllexport) char* __stdcall frey_read_call(char* frd_fpath,
 	add_log("(-arg3: log_fpath) ");
 	add_log(log_fpath);
 	add_log(" : char*\n");
+	add_log("(-arg5: non_secure_mode) ");
+	add_log(non_secure_mode);
+	add_log(" : bool\n");
 	strcpy_s(__frd_fpath, frd_fpath);
 	set_decryption_key(decryption_key);
-	frey_init();
-	frey_read(global_eid);
-	frey_finalize();
+	if (non_secure_mode) {
+		int size = DATA_SIZE;
+		char *sc = new char[size];
+		std::string ssc = sc;
+		delete[] sc;
+		frey_read_source_ocall((void *)sc, size);
+	}
+	else {
+		frey_init();
+		frey_read(global_eid);
+		frey_finalize();
+	}
 	if (log_fpath != NULL) {
 		output_log(log_fpath);
 	}
