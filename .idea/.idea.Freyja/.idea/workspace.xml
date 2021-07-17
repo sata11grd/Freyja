@@ -32,12 +32,10 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Core/Dll.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Demo/Demo1/Scripts/Level/Rotater.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Demo/Demo1/Scripts/DemoSceneManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Demo/Demo1/Scripts/Editor/DemoSceneManagerEditor.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/FreyjaSettings.cs" />
-      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Meta/FreyjaSettings.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Logging/Logger.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Exceptions/UnsupportedTypeException.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Exceptions/UnsupportedFormatException.cs" />
@@ -47,9 +45,12 @@
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Exceptions/UndefineOperationException.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Types/SecureString.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Types/SecureFloat.cs" />
-      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Freyja.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Types/SecureInt.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Demos/Demo3 - Speed Test 1/Scripts/DemoSceneManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Core/Dll.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Meta/FreyjaSettings.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Freyja.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Demos/Demo4 - Speed Test 2/Scripts/DemoSceneManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1sWsmcvUqUO9dipaipiBRLjzxUV" />
@@ -111,7 +112,7 @@
       <workItem from="1626264536913" duration="2616000" />
       <workItem from="1626410193283" duration="12459000" />
       <workItem from="1626440931168" duration="9124000" />
-      <workItem from="1626504259102" duration="2664000" />
+      <workItem from="1626504259102" duration="4056000" />
     </task>
     <servers />
   </component>

@@ -38,6 +38,16 @@ namespace Freyja.Meta
         [Header("Freyja Settings")]
         [SerializeField] private string freyjaDataFilePath = "C:\\Users\\sfuna\\Desktop\\.frd";
         public string FreyjaDataFilePath => freyjaDataFilePath;
+
+        /// <summary>
+        /// It enables non secure mode and secret calculation won't be executed but normally.
+        /// </summary>
+        [SerializeField] private bool nonSecureMode;
+        public bool NonSecureMode
+        {
+            get => nonSecureMode;
+            set => nonSecureMode = value;
+        }
         
         /// <summary>
         /// The file path which the log file will be saved.

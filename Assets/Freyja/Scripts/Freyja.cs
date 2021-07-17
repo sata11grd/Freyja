@@ -38,7 +38,7 @@ namespace Freyja
                 logFilePath = FreyjaSettings.Instance().LogFilePath;
             }
             
-            Dll.frey_write_call(data, frdFilePath, encryptionKey, logFilePath);
+            Dll.frey_write_call(data, frdFilePath, encryptionKey, logFilePath, FreyjaSettings.Instance().NonSecureMode);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Freyja
                 logFilePath = FreyjaSettings.Instance().LogFilePath;
             }
             
-            return Dll.frey_read_call(frdFilePath, encryptionKey, logFilePath);
+            return Dll.frey_read_call(frdFilePath, encryptionKey, logFilePath, FreyjaSettings.Instance().NonSecureMode);
         }
         
         /// <summary>
