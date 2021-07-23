@@ -753,7 +753,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21f035b7c711f8c4fb07b8c661504d2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runTestButton: {fileID: 0}
+  runTestButton: {fileID: 332153245}
 --- !u!4 &1448943165
 Transform:
   m_ObjectHideFlags: 0

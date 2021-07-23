@@ -300,7 +300,7 @@ char* str_export(char* str, int size) {
 
 #define DATA_SIZE 5096
 
-char __enclave_data[DATA_SIZE];
+char __data[DATA_SIZE];
 char __frd_fpath[256];
 
 #pragma region Logging
@@ -340,7 +340,7 @@ void add_log_star_line() {
 
 void add_gbuf_stat_to_log() {
 	add_log("gbuf stat: (START)");
-	add_log(__enclave_data);
+	add_log(__data);
 	add_log("(END)\n");
 }
 
@@ -349,7 +349,7 @@ void print_log() {
 }
 
 void print_gbuf_stat() {
-	printf("gbuf stat: %s\n", __enclave_data);
+	printf("gbuf stat: %s\n", __data);
 }
 
 void output_log(char* log_fpath) {
@@ -390,6 +390,7 @@ void set_decryption_key(char* key) {
 }
 
 char* encrypt(char *src) {
+	return src;
 	add_log("called func: encrypt\n");
 	add_log_line("(-arg1: src) ", src, " : char*");
 	int src_len = strlen(src);
@@ -421,6 +422,7 @@ char* encrypt(char *src) {
 }
 
 char* decrypt(char *src) {
+	return src;
 	add_log("called func: decrypt\n");
 	add_log_line("(-arg1: src) ", src, " : char*");
 	int src_len = strlen(src);
@@ -490,13 +492,13 @@ extern "C" __declspec(dllexport) void __stdcall frey_write_call(char* data, char
 	{
 		frey_init();
 	}
-	strcpy_s(__enclave_data, encrypt(data));
+	strcpy_s(__data, encrypt(data));
 	if (non_secure_mode) {
 		frey_write_source_ocall(NULL, NULL);
 	}
 	else {
 		frey_write(global_eid);
-		frey_finalize();
+		//frey_finalize();
 	}
 	if (log_fpath != NULL) {
 		output_log(log_fpath);
@@ -507,13 +509,17 @@ extern "C" __declspec(dllexport) void __stdcall frey_write_call(char* data, char
 
 void frey_write_source_ocall(void *sc, size_t size){
 	add_log("called func: frey_write_source_ocall\n");
-	FILE *fp;
-	fopen_s(&fp, __frd_fpath, "wb");
-	if (fp == NULL) {
-		add_log("error: the file could not be opened.\n");
+	char c;
+	int i = 0;
+	char *out = (char *)sc;
+	while (true) {
+		c = __data[i];
+		if (c == '\0') {
+			break;
+		}
+		out[i] = c;
+		++i;
 	}
-	fwrite(__enclave_data, sizeof(char), sizeof(__enclave_data) / sizeof(__enclave_data[0]), fp);
-	fclose(fp);
 }
 #pragma endregion
 
@@ -544,34 +550,28 @@ extern "C" __declspec(dllexport) char* __stdcall frey_read_call(char* frd_fpath,
 	else {
 		frey_init();
 		frey_read(global_eid);
-		frey_finalize();
+		//frey_finalize();
 	}
 	if (log_fpath != NULL) {
 		output_log(log_fpath);
 	}
 	clear_log();
-	return str_export(__enclave_data, DATA_SIZE);
+	return str_export(__data, DATA_SIZE);
 }
 
 void frey_read_source_ocall(void *sc, size_t size) {
 	add_log("called func: frey_read_source_ocall\n");
-	FILE *fp;
-	fopen_s(&fp, __frd_fpath, "r");
-	if (fp == NULL) {
-		strcpy_s(__enclave_data, "");
-		return;
-	}
 	char c;
 	int i = 0;
 	char *out = (char *)sc;
-	while ((c = (char)fgetc(fp)) != EOF) {
-		out[i++] = c;
-		if (i == size) {
-			add_log("error: the file size exceeds more bytes\n");
+	while (true) {
+		c = out[i];
+		if (c == '\0') {
+			break;
 		}
+		__data[i] = c;
+		++i;
 	}
-	strcpy_s(__enclave_data, decrypt(out));
-	fclose(fp);
 }
 #pragma endregion
 

@@ -29,39 +29,30 @@ namespace Freyja.Demo.Demo3
             
             var result = new List<TimeSpan>();
             var stopwatch = new Stopwatch();
-
-            // int speed
-            int x;
+            
+            var y = new SecureInt(input, "hp");
             
             stopwatch.Start();
-            
-            for (var i = 0; i < cycleCount; ++i)
+
+            var test = 0;
+            for (var i = 0; i < 10; i++)
             {
-                for (var j = 0; j < cycleStepCount; ++j)
-                {
-                    x = input;
-                }
-                    
-                result.Add(stopwatch.Elapsed);
+                test = y.Value;
             }
             
-            // SecureInt speed
-            var y = new SecureInt(input, "hp");
+            Debug.Log(stopwatch.Elapsed);
 
+            var buf = stopwatch.Elapsed;
+
+            int x = 0;
             stopwatch.Restart();
-            
-            for (var i = 0; i < cycleCount; ++i)
+            while (stopwatch.Elapsed < buf)
             {
-                for (var j = 0; j < cycleStepCount; ++j)
-                {
-                    y.Value = input;
-                }
-                    
-                result.Add(stopwatch.Elapsed);
+                x = x + 1;
             }
-
-            // show result
-            result.ForEach(time => Debug.Log(time));
+            Debug.Log(stopwatch.Elapsed);
+            Debug.Log(x);
+            return;
         }
     }
 }

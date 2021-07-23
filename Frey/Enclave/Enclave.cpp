@@ -40,22 +40,26 @@ void printf(const char *fmt, ...)
 	ocall_print_string(buf);
 }
 
-#define MAX_FILE_SIZE 10240
+#define ENCLAVE_DATA_SIZE 10240
+
+std::string __enclave_data;
 
 #pragma region Frey Funcs
 void frey_write() {
-	int size = MAX_FILE_SIZE;
+	int size = ENCLAVE_DATA_SIZE;
 	char *sc = new char[size];
+	frey_write_source_ocall((void *)sc, size);
 	std::string ssc = sc;
 	delete[] sc;
-	frey_write_source_ocall((void *)sc, size);
+	__enclave_data = ssc;
 }
 
 void frey_read() {
-	int size = MAX_FILE_SIZE;
+	int size = ENCLAVE_DATA_SIZE;
 	char *sc = new char[size];
+	std::char_traits<char>::copy(sc, __enclave_data.c_str(), __enclave_data.size() + 1);
+	frey_read_source_ocall((void *)sc, size);
 	std::string ssc = sc;
 	delete[] sc;
-	frey_read_source_ocall((void *)sc, size);
 }
 #pragma endregion

@@ -11,6 +11,7 @@ C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCT
   Thread.cpp
   コードを生成中...
   Enclave_t.c
+     
   Enclave.vcxproj -> C:\Users\sfuna\Documents\repos\Freyja\Frey\x64\Debug\FreyEnclave.dll
   sign the enclave
   The required memory is 0x418000.

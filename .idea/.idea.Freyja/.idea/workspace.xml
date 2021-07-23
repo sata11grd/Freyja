@@ -48,13 +48,13 @@
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Types/SecureString.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Types/SecureFloat.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Types/SecureInt.cs" />
-      <option value="$PROJECT_DIR$/Assets/Freyja/Demos/Demo3 - Speed Test 1/Scripts/DemoSceneManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Core/Dll.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Meta/FreyjaSettings.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/Freyja.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/FileIO/FileManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Scripts/FileIO/CsvFileManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Freyja/Demos/Demo4 - Speed Test 2/Scripts/DemoSceneManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Freyja/Demos/Demo3 - Speed Test 1/Scripts/DemoSceneManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1sWsmcvUqUO9dipaipiBRLjzxUV" />
@@ -116,7 +116,9 @@
       <workItem from="1626264536913" duration="2616000" />
       <workItem from="1626410193283" duration="12459000" />
       <workItem from="1626440931168" duration="9124000" />
-      <workItem from="1626504259102" duration="6389000" />
+      <workItem from="1626504259102" duration="6698000" />
+      <workItem from="1626665853560" duration="1166000" />
+      <workItem from="1627024240562" duration="15000" />
     </task>
     <servers />
   </component>
