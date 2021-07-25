@@ -1,25 +1,3 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: 中間ディレクトリ (x64\Debug\) に別のプロジェクト (App.vcxproj) と共有されているファイルが含まれています。これにより、クリーンしてリビルド動作が適切に行われない可能性があります。
-  App.cpp
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(289): warning C4267: '初期化中': 'size_t' から 'ULONG' に変換しました。データが失われているかもしれません。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(396): warning C4267: '初期化中': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(397): warning C4267: '初期化中': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(428): warning C4267: '初期化中': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(429): warning C4267: '初期化中': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(510): warning C4100: 'size': 引数は関数の本体部で 1 度も参照されません。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(562): warning C4100: 'size': 引数は関数の本体部で 1 度も参照されません。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(394): warning C4702: 制御が渡らないコードです。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(401): warning C4702: 制御が渡らないコードです。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(402): warning C4702: 制御が渡らないコードです。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(403): warning C4702: 制御が渡らないコードです。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(405): warning C4702: 制御が渡らないコードです。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(416): warning C4702: 制御が渡らないコードです。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(463): warning C4715: 'frey_init': 値を返さないコントロール パスがあります。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(426): warning C4702: 制御が渡らないコードです。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(433): warning C4702: 制御が渡らないコードです。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(434): warning C4702: 制御が渡らないコードです。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(435): warning C4702: 制御が渡らないコードです。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(437): warning C4702: 制御が渡らないコードです。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(448): warning C4702: 制御が渡らないコードです。
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(421): warning C4172: ローカル変数またはテンポラリのアドレスを返します: dest
-c:\users\sfuna\documents\repos\freyja\frey\app\app.cpp(453): warning C4172: ローカル変数またはテンポラリのアドレスを返します: dest
-  App.vcxproj -> C:\Users\sfuna\Documents\repos\Freyja\Frey\x64\Debug\FreyApp.dll
+  Creating untrusted proxy/bridge routines
+CUSTOMBUILD : error : .\..\Enclave\Enclave.edl(31,34): pointer/array should have direction attribute or `user_check'

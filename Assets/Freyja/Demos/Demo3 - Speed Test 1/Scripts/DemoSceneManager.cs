@@ -30,7 +30,7 @@ namespace Freyja.Demo.Demo3
             var result = new List<TimeSpan>();
             var stopwatch = new Stopwatch();
             
-            var y = new SecureInt(input, "hp");
+            var y = new SecureInt(input);
             
             stopwatch.Start();
 

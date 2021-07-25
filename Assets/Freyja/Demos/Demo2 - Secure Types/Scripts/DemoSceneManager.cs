@@ -33,8 +33,8 @@ namespace Freyja.Demo.Demo2
 
         private void Spawn()
         {
-            _shp = new SecureInt(100, "hp");
-            _smp = new SecureInt(100, "mp");
+            _shp = new SecureInt(100);
+            _smp = new SecureInt(100);
         }
 
         private void Show()

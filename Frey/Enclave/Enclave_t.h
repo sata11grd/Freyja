@@ -41,6 +41,7 @@ typedef union union_foo_t {
 
 void frey_write(void);
 void frey_read(void);
+void frey_test(void);
 void ecall_type_char(char val);
 void ecall_type_int(int val);
 void ecall_type_float(float val);

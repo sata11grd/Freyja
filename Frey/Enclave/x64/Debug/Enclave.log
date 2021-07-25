@@ -1,29 +1,4 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: 中間ディレクトリ (x64\Debug\) に別のプロジェクト (Enclave.vcxproj) と共有されているファイルが含まれています。これにより、クリーンしてリビルド動作が適切に行われない可能性があります。
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(402,5): warning MSB8038: Spectre 軽減策が有効になっていますが、Spectre 軽減策を適用済みのライブラリが見つかりません。Visual Studio ワークロードに Spectre 軽減策を適用済みのライブラリが含まれていることを確認してください。詳細については、https://aka.ms/Ofhn4c をご覧ください。
   Creating proxy/bridge routines
-  Arrays.cpp
-  Functions.cpp
-  Pointers.cpp
-  Types.cpp
-  Enclave.cpp
-  Libc.cpp
-  Libcxx.cpp
-  Thread.cpp
-  コードを生成中...
-  Enclave_t.c
-     
-  Enclave.vcxproj -> C:\Users\sfuna\Documents\repos\Freyja\Frey\x64\Debug\FreyEnclave.dll
-  sign the enclave
-  The required memory is 0x418000.
-  <EnclaveConfiguration>
-      <ProdID>0</ProdID>
-      <ISVSVN>0</ISVSVN>
-      <StackMaxSize>0x40000</StackMaxSize>
-      <HeapMaxSize>0x100000</HeapMaxSize>
-      <TCSNum>10</TCSNum>
-      <TCSPolicy>1</TCSPolicy>
-      <DisableDebug>0</DisableDebug>
-      <MiscSelect>0</MiscSelect>
-      <MiscMask>0xFFFFFFFF</MiscMask>
-  </EnclaveConfiguration>
-  Succeed.
+CUSTOMBUILD : error : Enclave.edl(31,34): pointer/array should have direction attribute or `user_check'

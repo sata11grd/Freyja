@@ -99,6 +99,7 @@ int SGX_UBRIDGE(SGX_CDECL, sgx_thread_set_multiple_untrusted_events_ocall, (cons
 
 sgx_status_t frey_write(sgx_enclave_id_t eid);
 sgx_status_t frey_read(sgx_enclave_id_t eid);
+sgx_status_t frey_test(sgx_enclave_id_t eid);
 sgx_status_t ecall_type_char(sgx_enclave_id_t eid, char val);
 sgx_status_t ecall_type_int(sgx_enclave_id_t eid, int val);
 sgx_status_t ecall_type_float(sgx_enclave_id_t eid, float val);

@@ -16,8 +16,8 @@ namespace Freyja.Types
             {
                 var data = Freyja.ReadCall();
                 var stats = Freyja.Convert(data);
-                
-                return (int) stats[_key];
+
+                return (int) stats[Key];
             }
             set
             {
@@ -26,23 +26,22 @@ namespace Freyja.Types
                 if (string.IsNullOrEmpty(data))
                 {
                     var stats = new Dictionary<string, object>();
-                    stats.Add(_key, value);
+                    stats.Add(Key, value);
                     Freyja.WriteCall(stats);
                 }
                 else
                 {
                     var stats = Freyja.Convert(data);
-                    stats[_key] = value;
+                    stats[Key] = value;
                     Freyja.WriteCall(stats);
                 }
             }
         }
-        
-        private readonly string _key;
 
-        public SecureInt(int value, string key)
+        private string Key => GetHashCode().ToString();
+
+        public SecureInt(int value)
         {
-            _key = key;
             Value = value;
         }
 
@@ -53,7 +52,7 @@ namespace Freyja.Types
         
         public static int operator +(SecureInt a, SecureInt b)
         {
-            if (a._key != b._key)
+            if (a.Key != b.Key)
             {
                 throw new IllegalOperationException("The given key identifiers are not be matched.");
             }
@@ -68,7 +67,7 @@ namespace Freyja.Types
 
         public static int operator -(SecureInt a, SecureInt b)
         {
-            if (a._key != b._key)
+            if (a.Key != b.Key)
             {
                 throw new IllegalOperationException("The given key identifiers are not be matched.");
             }
@@ -83,7 +82,7 @@ namespace Freyja.Types
         
         public static bool operator ==([NotNull]SecureInt a, [NotNull]SecureInt b)
         {
-            if (a._key != b._key)
+            if (a.Key != b.Key)
             {
                 throw new IllegalOperationException("The given key identifiers are not be matched.");
             }
@@ -98,7 +97,7 @@ namespace Freyja.Types
 
         public static explicit operator SecureInt(int value)
         {
-            return new SecureInt(value, null);
+            return new SecureInt(value);
         }
 
         public static implicit operator int(SecureInt value)
