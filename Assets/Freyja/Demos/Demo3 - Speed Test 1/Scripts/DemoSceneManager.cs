@@ -34,13 +34,13 @@ namespace Freyja.Demo.Demo3
             
             stopwatch.Start();
 
-            var test = 0;
             for (var i = 0; i < 10; i++)
             {
-                test = y.Value;
+                y.Value = input;
             }
             
             Debug.Log(stopwatch.Elapsed);
+            return;
 
             var buf = stopwatch.Elapsed;
 
